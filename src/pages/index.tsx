@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from 'next-auth/client'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-import { AiFillGithub, AiFillFacebook, AiOutlineArrowRight, AiFillTwitterCircle } from "react-icons/ai";
+import { AiFillGithub, AiFillFacebook, AiOutlineArrowRight, AiFillTwitterCircle, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import styles from '../styles/pages/Index.module.css';
 
 
@@ -50,7 +50,7 @@ export default function Login() {
             <form onSubmit={handleLogin}>
               <input
                 id="name"
-                type="text"
+                type="email"
                 placeholder="Digite seu e-mail"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
@@ -71,13 +71,16 @@ export default function Login() {
 
         )}
         {session && (
-          <div>
-            <img src={session.user.image} alt="" />
-          Signed in as {session.user.name} <br />
-            <Link href="/home">
-              <a>Home</a>
-            </Link>
-            <button onClick={() => signOut()}>Sign out</button>
+          <div className={styles.signedContainer}>
+            <img src={session.user.image} alt="Profile Image" />
+            <p>Você esta logado(a) como {session.user.name} </p>
+
+            <div className={styles.signedButtons}>
+              <button onClick={() => signOut()}>Sair</button>
+              <Link  href="/home">
+                <button>Começar</button>
+              </Link>
+            </div>
           </div>
         )}
       </section>
