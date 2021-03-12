@@ -75,7 +75,7 @@
 .container form>button {
     width: 80px;
     height: 80px;
-    background: #4953B8;
+    background: var(--blue);
     border-radius: 0px 5px 5px 0px;
 }
 
@@ -122,17 +122,17 @@
 }
 
 .signedButtons button:first-child{
-    color: #FFF;
+    color:var(--white);
     background: #4953B8;
     transition: background 0.5s;
 }
 .signedButtons button:first-child:hover{
-    background: #4CD62B;
+    background: var(--green);
 }
 
 .signedButtons button:last-child{
-    color: #FFF;
-    background: #4CD62B;
+    color: var(--white);
+    background: var(--green);
     transition: background 0.5s;
 }
 

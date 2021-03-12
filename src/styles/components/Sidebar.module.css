@@ -1,0 +1,61 @@
+.container {
+    position: fixed;
+    width: 112px;
+    height: 100vh;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    top: 0;
+    background: var(--white);
+}
+
+.container :is(img) {
+    width: 48px;
+}
+
+.container :is(div) {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container :is(button) {
+    width: 72px;
+    height: 56px;
+    background: none;
+    border: 0;
+    left: 0;
+    text-align: end;
+}
+
+.container :is(button):hover {
+    border-left: 5px solid var(--blue);
+}
+
+.container :is(svg) {
+    color: var(--text);
+    opacity: 0.5;
+    
+}
+
+.container :is(svg):hover {
+    color: var(--blue);
+    opacity: 1;
+}
+
+.container footer {
+    position: fixed;
+    left: 0;
+    bottom: 32px;
+}
+
+/* position: absolute;
+width: 72px;
+height: 56px;
+left: 0px;
+top: 350px; */

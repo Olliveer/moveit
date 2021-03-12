@@ -35,11 +35,22 @@ const options = {
     },
     database: process.env.DATABASE_URL,
     callbacks: {
-        redirect: async (url: string, _: string) => {
-            if (url === '/api/auth/signin') {
-                return Promise.resolve('/home')
+        signIn: async (profile, account, metadata) => {
+            console.info('we are here to see the callback\nP\nP');
+            console.log(profile, 'is the profile');
+            console.log(account, 'is the account');
+            console.log(metadata, 'is the metadata');
+            const res = await fetch('https://api.github.com/user/emails', {
+                headers: {
+                    'Authorization': `token ${account.accessToken}`
+                }
+            })
+            const emails = await res.json()
+            if (!emails || emails.length === 0) {
+                return
             }
-            return Promise.resolve('/')
+            const sortedEmails = emails.sort((a, b) => b.primary - a.primary)
+            profile.email = sortedEmails[0].email
         },
     },
 

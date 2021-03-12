@@ -1,12 +1,12 @@
-import { signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-import { AiFillGithub, AiFillFacebook, AiOutlineArrowRight, AiFillTwitterCircle, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
+import { AiFillFacebook, AiFillGithub, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
 import styles from '../styles/pages/Index.module.css';
 
 
-export default function Login() {
+export default function Login(props) {
   const router = useRouter();
   const [session, loading] = useSession();
   const [email, setEmail] = useState('');

@@ -1,5 +1,8 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import axios from 'axios';
 import Cookies from 'js-cookie';
+import { Session } from 'next-auth';
+import { getSession } from 'next-auth/client';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
 
@@ -22,11 +25,18 @@ interface ChallengesContextData {
     completeChallenge: () => void;
 }
 
+interface User {
+    name: string;
+    email: string;
+    image: string;
+}
+
 interface ChallengesProviderProps {
     children: ReactNode;
     level: number;
     currentExperience: number;
     challengesCompleted: number;
+    user: User;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
@@ -38,8 +48,18 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpOpen, setIsLevelUpOpen] = useState(false);
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
+    const [name] = useState(rest.user.name)
+    const [email] = useState(rest.user.email)
 
-
+    function rank() {
+        axios.post('api/rank/rank', {
+            name,
+            email,
+            level,
+            currentExperience,
+            challengesCompleted,
+        })
+    }
 
     useEffect(() => {
         Notification.requestPermission();
@@ -49,6 +69,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
         Cookies.set('level', String(level));
         Cookies.set('currentExperience', String(currentExperience));
         Cookies.set('challengesCompleted', String(challengesCompleted));
+        rank();
     }, [level, currentExperience, challengesCompleted])
 
     function levelUp() {
@@ -96,7 +117,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
         setChallengesCompleted(challengesCompleted + 1);
     }
 
-    function closeLevelUpModal(){
+    function closeLevelUpModal() {
         setIsLevelUpOpen(false);
     }
 
