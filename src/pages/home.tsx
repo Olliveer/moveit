@@ -11,6 +11,7 @@ import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
+import { connectToDatabase } from '../util/mongodb';
 
 interface HomeProps {
   level: number;
@@ -19,13 +20,14 @@ interface HomeProps {
 }
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  
+
   return (
     <ChallengeProvider
       level={props.level}
       currentExperience={props.currentExperience}
       challengesCompleted={props.challengesCompleted}
       user={props.user}
+      rank={props.rank}
     >
       <Sidebar />
       <div className={styles.container}>
@@ -53,6 +55,10 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const db = await connectToDatabase(process.env.MONGODB_URI);
+
+
+
   const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);
 
@@ -61,13 +67,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
     return { props: {} }
   }
-  
+  const user = await db.collection('users').findOne({ email: session.user.email });
+  const data = await db.collection('rank').find({ _id: user._id }).toArray();
+  const rank = JSON.parse(JSON.stringify(data));
+
   return {
     props: {
       level: Number(level),
       currentExperience: Number(currentExperience),
       challengesCompleted: Number(challengesCompleted),
-      user: session.user
+      user: session.user,
+      rank: rank
     }
   }
 }

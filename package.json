@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/js-cookie": "^2.2.6",
     "@types/mongodb": "^3.6.9",
-    "@types/next-auth": "^3.7.0",
+    "@types/next-auth": "^3.7.1",
     "@vercel/node": "^1.9.1",
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",

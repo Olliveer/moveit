@@ -2,6 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
+import { strict } from 'node:assert';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
@@ -37,19 +39,21 @@ interface ChallengesProviderProps {
     currentExperience: number;
     challengesCompleted: number;
     user: User;
+    rank: {}
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps) {
-    const [level, setLevel] = useState(rest.level ?? 1);
-    const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
-    const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
+    const [dataRank] = useState(rest.rank);
+    const [level, setLevel] = useState(dataRank[0].level ?? 1);
+    const [currentExperience, setCurrentExperience] = useState(dataRank[0].currentExperience ?? 0);
+    const [challengesCompleted, setChallengesCompleted] = useState(dataRank[0].challengesCompleted ?? 0);
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpOpen, setIsLevelUpOpen] = useState(false);
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
-    const [name] = useState(rest.user.name)
-    const [email] = useState(rest.user.email)
+    const [name] = useState(rest.user.name);
+    const [email] = useState(rest.user.email);
 
     function rank() {
         axios.post('api/rank/rank', {

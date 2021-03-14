@@ -1,10 +1,14 @@
-import { signIn } from 'next-auth/client'
+import { signIn } from 'next-auth/client';
 
 export default function Unauthenticated() {
-    return (
-        <div>
-            <p>You are not authenticated</p>
-            <button onClick={signIn}>Sign In</button>
-        </div>
-    )
+  function signIn() {
+    signIn();
+  }
+
+  return (
+    <div>
+      <p>You are not authenticated</p>
+      <button onClick={signIn}>Sign In</button>
+    </div>
+  );
 }

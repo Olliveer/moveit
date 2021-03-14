@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
+import { signIn } from 'next-auth/client';
 import Providers from 'next-auth/providers';
 
 const options = {
@@ -20,10 +22,10 @@ const options = {
             clientId: process.env.FACEBOOK_ID,
             clientSecret: process.env.FACEBOOK_SECRET
         }),
-        Providers.GitHub({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
-        }),
+        // Providers.GitHub({
+        //     clientId: process.env.GITHUB_ID,
+        //     clientSecret: process.env.GITHUB_SECRET
+        // }),
         Providers.Twitter({
             clientId: process.env.TWITTER_ID,
             clientSecret: process.env.TWITTER_SECRET
@@ -32,29 +34,16 @@ const options = {
     session: {
         jwt: true,
         maxAge: 2 * 60 * 60 * 60,
+        updateAge: 12 * 60 * 60,
+        encryption: true,
+        secret: process.env.SECRET_KEY,
     },
-    database: process.env.DATABASE_URL,
-    callbacks: {
-        signIn: async (profile, account, metadata) => {
-            console.info('we are here to see the callback\nP\nP');
-            console.log(profile, 'is the profile');
-            console.log(account, 'is the account');
-            console.log(metadata, 'is the metadata');
-            const res = await fetch('https://api.github.com/user/emails', {
-                headers: {
-                    'Authorization': `token ${account.accessToken}`
-                }
-            })
-            const emails = await res.json()
-            if (!emails || emails.length === 0) {
-                return
-            }
-            const sortedEmails = emails.sort((a, b) => b.primary - a.primary)
-            profile.email = sortedEmails[0].email
-        },
-    },
+    database: process.env.MONGODB_URI,
+    pages: {
+        error: 'auth/error',
+    }
+}
 
-};
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
     NextAuth(req, res, options);

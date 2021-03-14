@@ -2,8 +2,9 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-import { AiFillFacebook, AiFillGithub, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
+import { AiFillFacebook, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
 import styles from '../styles/pages/Index.module.css';
+
 
 
 export default function Login(props) {
@@ -31,16 +32,16 @@ export default function Login(props) {
 
             <div>
               <p>
-                Faça login com seu Github ou Facebook
+                Faça login com seu Facebook ou twitter
                 para começar
               </p>
               <button onClick={() => signIn('facebook')}>
                 <AiFillFacebook size={40} color="#FFF" />
               </button>
 
-              <button onClick={() => signIn('github')}>
+              {/* <button onClick={() => signIn('github')}>
                 <AiFillGithub size={40} color="#FFF" />
-              </button>
+              </button> */}
 
               <button onClick={() => signIn('twitter')}>
                 <AiFillTwitterCircle size={40} color="#FFF" />
@@ -61,7 +62,8 @@ export default function Login(props) {
                   email ?
                     { background: '#4CD62B' }
                     : { borderColor: '#4953B8' }
-                }>
+                }
+              >
                 <AiOutlineArrowRight size={24} color='#FFF' />
               </button>
             </form>
@@ -77,7 +79,7 @@ export default function Login(props) {
 
             <div className={styles.signedButtons}>
               <button onClick={() => signOut()}>Sair</button>
-              <Link  href="/home">
+              <Link href="/home">
                 <button>Começar</button>
               </Link>
             </div>
