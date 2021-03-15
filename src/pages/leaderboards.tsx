@@ -12,6 +12,7 @@ interface UserProps {
         level: number;
         challengesCompleted: number;
         currentExperience: number;
+        totalExperience: number;
     }
 }
 
@@ -32,7 +33,7 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
                         </tr>
                     </thead>
                     <tbody>
-                        {leaderboards.map((user: UserProps, index) => (
+                        {leaderboards.map((user: UserProps, index: number) => (
                             <tr key={user._id}>
                                 <td>{index + 1}</td>
                                 <td className={styles.UserContainer}>
@@ -44,7 +45,7 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
 
                                 </td>
                                 <td><span>{user.position.challengesCompleted}</span> completados</td>
-                                <td><span>{user.position.currentExperience}</span> xp</td>
+                                <td><span>{user.position.totalExperience}</span> xp</td>
                             </tr>
                         ))}
                     </tbody>
@@ -74,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     ).sort({ currentExperience: -1 }).limit(100).toArray();
 
     const data = JSON.parse(JSON.stringify(inner));
-    
+
     return {
         props: {
             leaderboards: data

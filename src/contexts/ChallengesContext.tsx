@@ -63,8 +63,6 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const [name] = useState(rest.user.name);
     const [email] = useState(rest.user.email);
 
-    console.log('TOTAL -> ', totalExperience)
-
     function rank() {
         axios.post('api/rank/rank', {
             name,
