@@ -74,8 +74,8 @@ export default function Login(props) {
         )}
         {session && (
           <div className={styles.signedContainer}>
-            <img src={session.user.image} alt="Profile Image" />
-            <p>Você esta logado(a) como {session.user.name} </p>
+            <img src={session.user.image ?? 'user-placeholder.png'} alt="Profile Image" />
+            <p>Você esta logado(a) como {session.user.name ?? session.user.email} </p>
 
             <div className={styles.signedButtons}>
               <button onClick={() => signOut()}>Sair</button>

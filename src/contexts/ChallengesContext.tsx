@@ -27,6 +27,13 @@ interface ChallengesContextData {
     completeChallenge: () => void;
 }
 
+interface UserRank {
+    level: number;
+    currentExperience: number;
+    challengesCompleted: number;
+    totalExperience: number;
+}
+
 interface User {
     name: string;
     email: string;
@@ -38,22 +45,25 @@ interface ChallengesProviderProps {
     level: number;
     currentExperience: number;
     challengesCompleted: number;
+    totalExperience: number;
     user: User;
-    rank: {}
+    rank: UserRank;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
 export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps) {
-    const [dataRank] = useState(rest.rank);
-    const [level, setLevel] = useState(dataRank[0].level ?? 1);
-    const [currentExperience, setCurrentExperience] = useState(dataRank[0].currentExperience ?? 0);
-    const [challengesCompleted, setChallengesCompleted] = useState(dataRank[0].challengesCompleted ?? 0);
+    const [level, setLevel] = useState(rest.rank.level ?? 1);
+    const [currentExperience, setCurrentExperience] = useState(rest.rank.currentExperience ?? 0);
+    const [challengesCompleted, setChallengesCompleted] = useState(rest.rank.challengesCompleted ?? 0);
     const [activeChallenge, setActiveChallenge] = useState(null);
     const [isLevelUpOpen, setIsLevelUpOpen] = useState(false);
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
+    const [totalExperience, setTotalExperience] = useState(rest.rank.totalExperience ?? 0);
     const [name] = useState(rest.user.name);
     const [email] = useState(rest.user.email);
+
+    console.log('TOTAL -> ', totalExperience)
 
     function rank() {
         axios.post('api/rank/rank', {
@@ -62,6 +72,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
             level,
             currentExperience,
             challengesCompleted,
+            totalExperience,
         })
     }
 
@@ -70,9 +81,6 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     }, [])
 
     useEffect(() => {
-        Cookies.set('level', String(level));
-        Cookies.set('currentExperience', String(currentExperience));
-        Cookies.set('challengesCompleted', String(challengesCompleted));
         rank();
     }, [level, currentExperience, challengesCompleted])
 
@@ -108,14 +116,14 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
         }
 
         const { amount } = activeChallenge;
+        console.log('AMOUNT ->', amount)
 
         let finalExperience = currentExperience + amount;
-
         if (finalExperience >= experienceToNextLevel) {
             finalExperience = finalExperience - experienceToNextLevel;
             levelUp();
         }
-
+        setTotalExperience(amount + totalExperience)
         setCurrentExperience(finalExperience);
         setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1);

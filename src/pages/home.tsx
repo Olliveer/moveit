@@ -13,12 +13,6 @@ import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
 import { connectToDatabase } from '../util/mongodb';
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
-
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   return (
@@ -57,8 +51,6 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const db = await connectToDatabase(process.env.MONGODB_URI);
 
-
-
   const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);
 
@@ -68,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: {} }
   }
   const user = await db.collection('users').findOne({ email: session.user.email });
-  const data = await db.collection('rank').find({ _id: user._id }).toArray();
+  const data = await db.collection('rank').find({ user_id: user._id }).toArray();
   const rank = JSON.parse(JSON.stringify(data));
 
   return {
@@ -77,7 +69,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       currentExperience: Number(currentExperience),
       challengesCompleted: Number(challengesCompleted),
       user: session.user,
-      rank: rank
+      rank: rank[0] ?? {},
     }
   }
 }

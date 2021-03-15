@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
-import { signIn } from 'next-auth/client';
 import Providers from 'next-auth/providers';
 
 const options = {
@@ -39,9 +37,6 @@ const options = {
         secret: process.env.SECRET_KEY,
     },
     database: process.env.MONGODB_URI,
-    pages: {
-        error: 'auth/error',
-    }
 }
 
 

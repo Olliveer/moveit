@@ -23,10 +23,11 @@ export function Sidebar() {
             <AiOutlineUser size={32} />
           </button>
         </Link>
-
-        <button>
-          <AiOutlineTrophy size={32} />
-        </button>
+        <Link href="/leaderboards">
+          <button>
+            <AiOutlineTrophy size={32} />
+          </button>
+        </Link>
       </div>
 
       <footer>
