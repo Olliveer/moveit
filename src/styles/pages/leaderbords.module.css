@@ -42,8 +42,7 @@
 .TableContainer tr> :is(td):first-child {
     text-align: center;
     width: 72px;
-    height: 96px;
-    border-radius: 5px 0px 0px 5px;
+    height: 96px;    
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 29px;

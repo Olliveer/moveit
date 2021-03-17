@@ -1,6 +1,4 @@
-import { useSession } from 'next-auth/client';
-import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.css';
 

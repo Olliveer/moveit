@@ -26,10 +26,10 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
                 <table>
                     <thead>
                         <tr>
-                            <th>POSIÇÃO</th>
+                            <th>posição</th>
                             <th>usuário</th>
-                            <th>DESAFIOS</th>
-                            <th>EXPERIÊNCIA</th>
+                            <th>desafios</th>
+                            <th>experiência</th>
                         </tr>
                     </thead>
                     <tbody>

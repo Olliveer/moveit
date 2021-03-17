@@ -1,14 +1,16 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import { AiFillCheckCircle, AiOutlineClose } from "react-icons/ai";
 import { CountdownContext } from '../contexts/CountdownContext';
-import { AiFillCheckCircle } from "react-icons/ai";
 import styles from '../styles/components/Countdown.module.css';
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export function Countdown() {
     const {
         minutes,
         seconds,
+        progress,
         hasFinished,
         isActive,
         resetCountdown,
@@ -17,6 +19,7 @@ export function Countdown() {
 
     const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
     const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
+
 
     return (
         <div>
@@ -40,23 +43,28 @@ export function Countdown() {
                     Ciclo encerrado <AiFillCheckCircle size={24} color="#4CD62B" />
                 </button>
             ) : (
-                    <>
-                        {isActive ?
-                            (
+                <>
+                    {isActive ?
+                        (
+
+                            <>
                                 <button
                                     onClick={resetCountdown}
                                     type="button"
                                     className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
                                 >
-                                    Abandonar ciclo
+                                    Abandonar ciclo <AiOutlineClose size={24} color='#666666' />
                                 </button>
-                            ) : (
-                                <button onClick={startCountdown} type="button" className={styles.countdownButton}>
-                                    Iníciar um ciclo
-                                </button>
-                            )}
-                    </>
-                )}
+
+                                <ProgressBar now={progress} bsPrefix='prog' max={120} min={0} variant="success" srOnly />
+                            </>
+                        ) : (
+                            <button onClick={startCountdown} type="button"  className={styles.countdownButton}>
+                                Iníciar um ciclo
+                            </button>
+                        )}
+                </>
+            )}
         </div>
     );
 }

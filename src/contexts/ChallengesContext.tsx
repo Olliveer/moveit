@@ -114,7 +114,6 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
         }
 
         const { amount } = activeChallenge;
-        console.log('AMOUNT ->', amount)
 
         let finalExperience = currentExperience + amount;
         if (finalExperience >= experienceToNextLevel) {

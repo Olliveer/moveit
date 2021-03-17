@@ -50,3 +50,31 @@ a {
     color: inherit;
     text-decoration: none;
 }
+
+.prog {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #E9ECEF;
+    border-radius: 0 5px 5px;
+    height: 5px;
+
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.progBar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--white);
+    text-align: center;
+    white-space: nowrap;
+    background-color: #28a745;
+    transition: width .6s ease;
+}

@@ -76,3 +76,12 @@
     background: var(--red);
     color: var(--white);
 }
+
+.countdownButtonActive:not(:disabled) svg {
+    margin-left: 1rem;
+}
+
+/* .countdownButtonActive:not(:disabled) svg:hover{
+    color: var(--white);
+} */
+
