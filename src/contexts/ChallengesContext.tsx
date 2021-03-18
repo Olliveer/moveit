@@ -1,9 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/client';
-import { useRouter } from 'next/router';
-import { strict } from 'node:assert';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
@@ -17,6 +12,7 @@ interface Challenge {
 interface ChallengesContextData {
     level: number;
     currentExperience: number;
+    totalExperience: number;
     challengesCompleted: number;
     activeChallenge: Challenge;
     experienceToNextLevel: number;
@@ -45,7 +41,6 @@ interface ChallengesProviderProps {
     level: number;
     currentExperience: number;
     challengesCompleted: number;
-    totalExperience: number;
     user: User;
     rank: UserRank;
 }
@@ -136,6 +131,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
                 level,
                 currentExperience,
                 challengesCompleted,
+                totalExperience,
                 levelUp,
                 startNewChallenge,
                 activeChallenge,

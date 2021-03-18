@@ -23,6 +23,12 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       user={props.user}
       rank={props.rank}
     >
+      <Head>
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="http://localhost:3000/home" />
+        <meta property="twitter:description" content="Parabéns você subiu um nível, continue assim :D" />
+        <meta property="twitter:image" content="https://i.imgur.com/IZSZ5xr.png"></meta>
+      </Head>
       <Sidebar />
       <div className={styles.container}>
         <Head>
@@ -51,7 +57,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const db = await connectToDatabase(process.env.MONGODB_URI);
 
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
+  // const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);
 
   if (!session) {
@@ -65,9 +71,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
+      // level: Number(level),
+      // currentExperience: Number(currentExperience),
+      // challengesCompleted: Number(challengesCompleted),
       user: session.user,
       rank: rank[0] ?? {},
     }

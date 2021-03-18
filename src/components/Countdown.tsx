@@ -3,7 +3,6 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import { AiFillCheckCircle, AiOutlineClose } from "react-icons/ai";
 import { CountdownContext } from '../contexts/CountdownContext';
 import styles from '../styles/components/Countdown.module.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export function Countdown() {
@@ -59,7 +58,7 @@ export function Countdown() {
                                 <ProgressBar now={progress} bsPrefix='prog' max={120} min={0} variant="success" srOnly />
                             </>
                         ) : (
-                            <button onClick={startCountdown} type="button"  className={styles.countdownButton}>
+                            <button onClick={startCountdown} type="button" className={styles.countdownButton}>
                                 Iníciar um ciclo
                             </button>
                         )}
