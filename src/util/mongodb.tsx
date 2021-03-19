@@ -1,5 +1,4 @@
 import { Db, MongoClient } from "mongodb";
-import url from "url";
 
 let cachedDb: Db = null;
 
@@ -13,9 +12,9 @@ export async function connectToDatabase(uri: string) {
         useUnifiedTopology: true,
     });
 
-    const dbName = url.parse(uri).pathname.substr(1);
+    const dbName = new URL(uri);
 
-    const db = client.db(dbName);
+    const db = client.db(dbName.pathname.substring(1));
 
     cachedDb = db;
 

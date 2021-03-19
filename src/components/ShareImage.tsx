@@ -7,13 +7,13 @@ import styles from '../styles/components/ShareImage.module.css';
 const ShareImage = () => {
     const { level, totalExperience, challengesCompleted } = useContext(ChallengesContext);
    
-    htmlToImage.toJpeg(document.getElementById('share-img'), { quality: 0.95 })
-        .then(function (dataUrl) {
-            var link = document.createElement('a');
-            link.download = 'my-image-name.jpeg';
-            link.href = dataUrl;
-            link.click();
-        });
+    // htmlToImage.toJpeg(document.getElementById('share-img'), { quality: 0.95 })
+    //     .then(function (dataUrl) {
+    //         var link = document.createElement('a');
+    //         link.download = 'my-image-name.jpeg';
+    //         link.href = dataUrl;
+    //         link.click();
+    //     });
     
     return (
         <div id='share-img' className={styles.container}>

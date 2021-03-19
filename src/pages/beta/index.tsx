@@ -10,13 +10,7 @@ export default function Login () {
   const [isLoginStarted, setIsLoginStarted] = useState(false)
   const [loginError, setLoginError] = useState('')
   const router = useRouter()
-
-  useEffect(() => {
-    if (router.query.error) {
-      setLoginError(router.query.error)
-      setEmail(router.query.email)
-    }
-  }, [router])
+  
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()

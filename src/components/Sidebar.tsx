@@ -31,7 +31,7 @@ export function Sidebar() {
       </div>
 
       <footer>
-        <button onClick={() => signOut()}>
+        <button onClick={signOut}>
           <AiOutlinePoweroff size={32} />
         </button>
       </footer>

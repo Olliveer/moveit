@@ -1,10 +1,5 @@
+import { GetStaticProps, InferGetServerSidePropsType } from "next";
 import React from 'react';
-import { signOut } from 'next-auth/client'
+import { connectToDatabase } from "../util/mongodb";
+import { Sidebar } from './Sidebar';
 
-export default function Authenticated({ user }) {
-  return (
-    <div>
-      <button onClick={() => signOut}>Sign Out</button>
-    </div>
-  )
-}

@@ -14,7 +14,7 @@ import styles from '../styles/pages/Home.module.css';
 import { connectToDatabase } from '../util/mongodb';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
+  
   return (
     <ChallengeProvider
       level={props.level}
@@ -23,12 +23,6 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       user={props.user}
       rank={props.rank}
     >
-      <Head>
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="http://localhost:3000/home" />
-        <meta property="twitter:description" content="Parabéns você subiu um nível, continue assim :D" />
-        <meta property="twitter:image" content="https://i.imgur.com/IZSZ5xr.png"></meta>
-      </Head>
       <Sidebar />
       <div className={styles.container}>
         <Head>
