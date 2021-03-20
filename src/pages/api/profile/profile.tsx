@@ -8,8 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const users = db.collection('users');
     const user = await users.findOne({ _id: id });
-    console.log(user);
-    
+
     await users.updateOne({ _id: id}, {
         $set: {
             name: name,

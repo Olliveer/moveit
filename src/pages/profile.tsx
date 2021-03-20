@@ -1,36 +1,19 @@
+import axios from 'axios'
 import { ObjectId } from 'bson'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession, useSession } from 'next-auth/client'
+import { FormEvent, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
+import ToastAnimated, { showToast } from '../components/Toast'
+import styles from '../styles/pages/Profile.module.css'
 import { connectToDatabase } from '../util/mongodb'
-
-import styles from '../styles/pages/Profile.module.css';
-import { FormEvent, useContext, useState } from 'react'
-import { ChallengesContext } from '../contexts/ChallengesContext'
-import { useRouter } from 'next/router'
-import axios from 'axios'
-
-interface UserProps {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  position: {
-    level: number;
-    challengesCompleted: number;
-    currentExperience: number;
-    totalExperience: number;
-  }
-}
 
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [session, loading] = useSession()
-  const { challengesCompleted, level, totalExperience } = useContext(ChallengesContext);
   const [id] = useState(props.user._id);
   const [name, setName] = useState(props.user.name);
   const [email, setEmail] = useState(props.user.email)
   const [edit, setEdit] = useState(false);
-  const router = useRouter()
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -38,7 +21,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
       id,
       name,
       email
-    }).then(() => setEdit(false));
+    }).then(res => showToast({type: 'default', message: res.data.message })).catch().finally(() => setEdit(false))
   }
 
   function userEdit() {
@@ -51,6 +34,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
 
   return (
     <div className={styles.Container}>
+      <ToastAnimated />
       <Sidebar />
       <h1>Profile</h1>
       <div className={styles.FormContainer}>
@@ -113,11 +97,8 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
                 <p><span>{props.user.position.totalExperience}</span> xp</p>
                 <img src="share-logo.svg" alt="" />
               </div>
-
-
             </section>
           )}
-
         </form>
       </div>
     </div>
