@@ -5,7 +5,7 @@
     flex-direction: column;
 }
 
-.Container :is(h1) {
+.Container>h1 {
     font-weight: 600;
     font-size: 2.25rem;
     line-height: 46px;
@@ -19,7 +19,7 @@
     background: var(--white);
     width: 100%;
     max-width: 1100px;
-    margin-top: 51px;
+    margin-top: 30px;
     margin-left: 296px;
     border-radius: 5px;
 }
@@ -27,7 +27,7 @@
 .FormContainer section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 5rem;
     align-content: center;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .Container form :is(button) {
-    margin-top: 5px;
+    margin-top: 0px;
     width: 100%;
     height: 80px;
     background: #5965E0;
@@ -76,6 +76,21 @@
     font-size: 1.25rem;
     font-weight: 600;
     text-align: center;
+    margin-top: 25px;
+}
+
+.ButtonsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.ButtonsContainer button:first-of-type{
+    background: var(--green);
+}
+
+.ButtonsContainer button:last-of-type:hover{
+    background: var(--red);
 }
 
 .Container form :is(button):hover {
@@ -83,4 +98,77 @@
     border-radius: 5px;
 }
 
-    
+.FormContainer section>div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.FormContainer section>div:last-of-type h1 {
+    margin-bottom: 0px;
+    color: #666666;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 29px;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+.FormContainer section>div:last-of-type h1:last-of-type {
+    margin-top: 32px;
+}
+
+.FormContainer section>div:last-of-type p {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 48px;
+    text-align: start;
+    color: #666666;
+    margin-top: 10px;
+    padding-bottom: 32px;
+    border-bottom: 1.5px solid #DCDDE0;
+}
+
+.FormContainer section>div:last-of-type span {
+    color: #5965E0;
+}
+
+.FormContainer section>div:last-of-type img {
+    width: 80%;
+}
+
+.FormContainer section>div:last-of-type {
+    width: 100%;
+    align-content: center;
+    background: url('/icons/levelup.svg') no-repeat top;
+}
+
+.FormContainer section>div:last-of-type h3 {
+    font-size: 5rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 150px;
+    color: #5965E0;
+    text-shadow: 0px 10px 16px rgba(89, 101, 224, 0.3);
+}
+
+.Profile>div:first-of-type :is(h1) {
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666666;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 29px;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.Profile>div:first-of-type :is(p) {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: start;
+    color: #666666;
+    padding-bottom: 32px;
+    text-align: center;
+}

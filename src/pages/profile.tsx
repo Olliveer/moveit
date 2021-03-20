@@ -7,6 +7,8 @@ import { connectToDatabase } from '../util/mongodb'
 import styles from '../styles/pages/Profile.module.css';
 import { FormEvent, useContext, useState } from 'react'
 import { ChallengesContext } from '../contexts/ChallengesContext'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
 interface UserProps {
   _id: string;
@@ -24,12 +26,27 @@ interface UserProps {
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [session, loading] = useSession()
   const { challengesCompleted, level, totalExperience } = useContext(ChallengesContext);
+  const [id] = useState(props.user._id);
   const [name, setName] = useState(props.user.name);
   const [email, setEmail] = useState(props.user.email)
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const router = useRouter()
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    axios.post('api/profile/profile', {
+      id,
+      name,
+      email
+    }).then(() => setEdit(false));
+  }
+
+  function userEdit() {
+    setEdit(true);
+  }
+
+  function back() {
+    setEdit(false);
   }
 
   return (
@@ -54,47 +71,50 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
                   id="email"
                   value={email}
                   onChange={event => setEmail(event.target.value)} />
+
+                <div className={styles.ButtonsContainer}>
+                  <button type="submit">
+                    Atualizar
+                </button>
+                  <button onClick={() => back()}>
+                    Voltar
+                </button>
+                </div>
               </div>
 
               <div>
+                <h3>{props.user.position.level}</h3>
                 <h1>Desafios</h1>
-                <p><span>{challengesCompleted}</span> completados</p>
+                <p><span>{props.user.position.challengesCompleted}</span> completados</p>
                 <h1>experiência</h1>
-                <p><span>{totalExperience}</span> xp</p>
+                <p><span>{props.user.position.totalExperience}</span> xp</p>
                 <img src="share-logo.svg" alt="" />
               </div>
-
-              <button type="submit">
-                Atualizar
-            </button>
             </section>
           ) : (
-            <section>
+            <section className={styles.Profile}>
               <div>
                 <img src={props.user.image ?? 'user-placeholder.png'} alt="User photo" />
-                <label htmlFor="name">Nome</label>
-                <input
-                  id="name"
-                  value={name}
-                  onChange={event => setName(event.target.value)} />
+                <h1>Nome</h1>
+                <p>{name}</p>
 
-                <label htmlFor="email">E-mail</label>
-                <input
-                  id="email"
-                  value={email}
-                  onChange={event => setEmail(event.target.value)} />
+                <h1>E-mail</h1>
+                <p>{email}</p>
+                <button onClick={() => userEdit()}>
+                  Editar
+                </button>
               </div>
+
               <div>
+                <h3>{props.user.position.level}</h3>
                 <h1>Desafios</h1>
-                <p><span>{challengesCompleted}</span> completados</p>
+                <p><span>{props.user.position.challengesCompleted}</span> completados</p>
                 <h1>experiência</h1>
-                <p><span>{totalExperience}</span> xp</p>
+                <p><span>{props.user.position.totalExperience}</span> xp</p>
                 <img src="share-logo.svg" alt="" />
               </div>
 
-              <button type="submit">
-                Editar
-            </button>
+
             </section>
           )}
 
@@ -114,7 +134,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
     return { props: {} }
   }
-
 
   const user = await db.collection('users').findOne({ email: session.user.email });
 
@@ -138,7 +157,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     ]
   ).sort({ currentExperience: -1 }).limit(100).toArray();
-  console.log('inner', inner)
+
   const data = JSON.parse(JSON.stringify(inner));
 
   return {
