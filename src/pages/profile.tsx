@@ -24,10 +24,6 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
     }).then(res => showToast({type: 'default', message: res.data.message })).catch().finally(() => setEdit(false))
   }
 
-  function userEdit() {
-    setEdit(true);
-  }
-
   function back() {
     setEdit(false);
   }
@@ -84,7 +80,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
 
                 <h1>E-mail</h1>
                 <p>{email}</p>
-                <button onClick={() => userEdit()}>
+                <button onClick={() =>  setEdit(true)}>
                   Editar
                 </button>
               </div>

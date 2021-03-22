@@ -13,8 +13,7 @@ import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
 import { connectToDatabase } from '../util/mongodb';
 
-export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {   
   return (
     <ChallengeProvider
       level={props.level}
@@ -22,13 +21,13 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       challengesCompleted={props.challengesCompleted}
       user={props.user}
       rank={props.rank}
-    >
-      <Sidebar />
+    >    
+      <Sidebar admin={props.admin}/>
       <div className={styles.container}>
         <Head>
           <title>Início | move.it</title>
         </Head>
-
+    
         <ExperienceBar />
         <CountdownProvider>
           <section>
@@ -37,7 +36,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
               <CompleteChallanges />
               <Countdown />
             </div>
-
+              
             <div>
               <ChallangeBox />
             </div>
@@ -70,6 +69,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       // challengesCompleted: Number(challengesCompleted),
       user: session.user,
       rank: rank[0] ?? {},
+      admin: user.admin
     }
   }
 }

@@ -1,37 +1,65 @@
 import { signOut } from 'next-auth/client';
 import Link from 'next/link';
+import { useState } from 'react';
 import {
-  AiOutlineHome, AiOutlinePoweroff, AiOutlineTrophy, AiOutlineUser,
+  AiOutlineHome, AiOutlinePoweroff, AiOutlineSetting, AiOutlineTrophy, AiOutlineUser
 } from 'react-icons/ai';
-
 import styles from '../styles/components/Sidebar.module.css';
 
-export function Sidebar() {
 
+export function Sidebar({ admin = null }) {  
   return (
     <aside className={styles.container}>
       <img src="logo-side.svg" alt="Move it Logo" />
 
       <div>
-        <Link href="/home">
-          <button>
-            <AiOutlineHome size={32} />
-          </button>
-        </Link>
-        <Link href="/profile">
-          <button>
-            <AiOutlineUser size={32} />
-          </button>
-        </Link>
-        <Link href="/leaderboards">
-          <button>
-            <AiOutlineTrophy size={32} />
-          </button>
-        </Link>
+        {admin ? (
+          <>
+            <Link href="/beta">
+              <button>
+                <AiOutlineSetting size={32} />
+              </button>
+            </Link>
+            <Link href="/home">
+              <button>
+                <AiOutlineHome size={32} />
+              </button>
+            </Link>
+            <Link href="/profile">
+              <button>
+                <AiOutlineUser size={32} />
+              </button>
+            </Link>
+            <Link href="/leaderboards">
+              <button>
+                <AiOutlineTrophy size={32} />
+              </button>
+            </Link>
+
+          </>
+        ) : (
+          <>
+            <Link href="/home">
+              <button>
+                <AiOutlineHome size={32} />
+              </button>
+            </Link>
+            <Link href="/profile">
+              <button>
+                <AiOutlineUser size={32} />
+              </button>
+            </Link>
+            <Link href="/leaderboards">
+              <button>
+                <AiOutlineTrophy size={32} />
+              </button>
+            </Link>
+          </>
+        )}
       </div>
 
       <footer>
-        <button onClick={signOut}>
+        <button onClick={() => signOut({ redirect: false })}>
           <AiOutlinePoweroff size={32} />
         </button>
       </footer>

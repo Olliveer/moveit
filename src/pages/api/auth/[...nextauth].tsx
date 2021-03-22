@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
@@ -37,6 +38,13 @@ const options = {
         secret: process.env.SECRET_KEY,
     },
     database: process.env.MONGODB_URI,
+    pages: {
+        error: '/index',
+        newUser: null,
+    },
+    callback: {
+        
+    }
 }
 
 

@@ -7,15 +7,14 @@ import styles from '../../styles/pages/Dashboard.module.css'
 import { connectToDatabase } from '../../util/mongodb'
 
 
-export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function All(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
     return (
         <div className={styles.Container}>
             <Sidebar admin={props.admin} />
-            <h1>Dashboard</h1>
-            <DashCards totalUsers={props.totalUsers} />
+            <h1>Lista de Usuários</h1>
             <div className={styles.ContentContainer}>
-                <h1>INFOS</h1>
+                <h1>LISTA DE USERS</h1>
             </div>
         </div>
     )

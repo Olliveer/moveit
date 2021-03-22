@@ -1,25 +1,41 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession } from 'next-auth/client'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getSession } from 'next-auth/client';
 import React, { useState } from 'react'
-import DashCards from '../../components/DashCards'
+import DashCards from '../../components/DashCards';
 import { Sidebar } from '../../components/Sidebar'
-import styles from '../../styles/pages/Dashboard.module.css'
-import { connectToDatabase } from '../../util/mongodb'
+import { connectToDatabase } from '../../util/mongodb';
+import styles from '../../styles/pages/Users.module.css';
 
+export default function Users(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const [userList, setUseList] = useState(true);
+    const [userAdd, setUserAdd] = useState(false);
 
-export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    function newUser() {
+        setUseList(false)
+        setUserAdd(true)
+    }
 
     return (
         <div className={styles.Container}>
             <Sidebar admin={props.admin} />
-            <h1>Dashboard</h1>
-            <DashCards totalUsers={props.totalUsers} />
-            <div className={styles.ContentContainer}>
-                <h1>INFOS</h1>
-            </div>
+            <h1>Users</h1>
+            {userList && (
+                <div className={styles.ContentContainer}>
+                    <h1>List</h1>
+                </div>
+
+            )}
+            {userAdd && (
+                <div className={styles.ContentContainer}>
+                    <h1>Edit</h1>
+                </div>
+            )}
+
+            <button onClick={newUser}>Add</button>
         </div>
     )
 }
+
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const db = await connectToDatabase(process.env.MONGODB_URI);
