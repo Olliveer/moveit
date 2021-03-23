@@ -1,10 +1,13 @@
-import Link from 'next/link';
-import React from 'react'
+import React from 'react';
 import { AiOutlineOrderedList, AiOutlinePlus, AiOutlineUndo, AiOutlineUserAdd } from 'react-icons/ai';
 import styles from '../styles/components/DashCards.module.css';
-import { GiRun } from "react-icons/gi";
 
-export default function DashCards({ totalUsers }) {
+export default function DashCards({ totalUsers,totalRank, totalAdmins, set }) {
+
+    function resetRank(){
+        alert('resetar rank')
+    }
+
     return (
         <div className={styles.CardsContainer}>
             <div>
@@ -13,48 +16,38 @@ export default function DashCards({ totalUsers }) {
                     <span>{totalUsers}</span>
                 </header>
                 <footer>
-                    <Link href='beta/all'>
-                        <button><AiOutlineUserAdd size={40} /></button>
-                    </Link>
-                    <button><AiOutlineOrderedList size={40} /></button>
+                    <button onClick={() => set('users')}><AiOutlineOrderedList size={32} /></button>
                 </footer>
             </div>
             <div>
-            <header>
+                <header>
                     <h1>Admin</h1>
-                    <span>{totalUsers}</span>
+                    <span>{totalAdmins}</span>
                 </header>
                 <footer>
-                    <Link href='beta/users'>
-                        <button><AiOutlineUserAdd size={40} /></button>
-                    </Link>
-                    <button><AiOutlineOrderedList size={40} /></button>
+                    <button onClick={() => set('admin')}><AiOutlineUserAdd size={40} /></button>
                 </footer>
             </div>
             <div>
-            <header>
+                <header>
                     <h1>Exercícios</h1>
                     <span>{totalUsers}</span>
                 </header>
                 <footer>
-                    <Link href='beta/users'>
-                        <button><AiOutlinePlus  size={40} /></button>
-                    </Link>
-                    <button><AiOutlineOrderedList size={40} /></button>
+                    <button onClick={() => set('challenges')}><AiOutlinePlus size={40} /></button>
                 </footer>
             </div>
             <div>
-            <header>
-                    <h1>Total XP</h1>
-                    <span>{totalUsers}</span>
+                <header>
+                    <h1>Rank</h1>
+                    <span>{totalRank}</span>
                 </header>
                 <footer>
-                    <Link href='beta/users'>
-                        <button><AiOutlineUndo size={40} /></button>
-                    </Link>
-                    <button><AiOutlineOrderedList size={40} /></button>
+                    <button id="rank" onClick={resetRank}><AiOutlineUndo size={40} /></button>
                 </footer>
             </div>
         </div>
     )
 }
+
+

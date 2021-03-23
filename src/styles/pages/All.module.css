@@ -1,0 +1,105 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 10px auto;
+}
+
+.Container>h1 {
+    font-weight: 600;
+    font-size: 2.25rem;
+    line-height: 46px;
+    margin-top: 20px;
+    color: var(--title);
+    text-align: start !important;
+}
+
+.TableContainer :is(table) {
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.TableContainer thead :is(tr) {
+    justify-content: space-between;
+    flex-direction: row;
+    background: none;
+    height: 50px;
+}
+
+.TableContainer thead :is(th) {
+    text-align: start;
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 17px;
+    text-transform: uppercase;
+    color: #666666;
+    opacity: 0.5;
+}
+
+.TableContainer tr> :is(td):first-child {
+    text-align: center;
+    width: 100%;
+    height: 96px;    
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 29px;
+    color: #666666;
+}
+
+.UserContainer  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.TableContainer :is(img) {
+    width: 64px;
+    height: 64px;
+    border-radius: 40px;
+    margin-top: 16px;
+    margin-left: 24px;
+}
+
+.UserContainer :is(div){
+    margin-top: 24px;
+    margin-left: 16px;
+    text-align: start;
+}
+
+.UserContainer :is(p):first-child {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 24px;
+    color: #2E384D;   
+}
+.UserContainer :is(p):last-child {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 19px;
+    color: #666666;   
+}
+
+.UserContainer p > :is(img){
+    width: 14px;
+    height: 16px;
+    margin-top: 7px;
+    margin-left: 0px;
+}
+
+.TableContainer :is(tr) {
+    background: var(--white);
+    border-bottom: 5px solid var(--backgroud);
+}
+
+.TableContainer tbody :is(span) {
+    color: var(--blue);
+}
+
+.TableContainer tbody :is(td){
+    color: #666666;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 19px;
+}

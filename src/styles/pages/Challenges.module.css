@@ -1,4 +1,4 @@
-.Container {
+.Container{
     display: flex;
     flex-direction: column;
     max-width: 1200px;
@@ -40,12 +40,13 @@
 
 .TableContainer tr> :is(td):first-child {
     text-align: center;
-    width: 100%;
+    width: 110px;
     height: 96px;
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 29px;
     color: #666666;
+    padding: 20px;
 }
 
 .TableContainer table> tbody :is(button) {
@@ -90,45 +91,10 @@
     color: var(--white);
 }
 
-.UserContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
 .TableContainer :is(img) {
     width: 64px;
     height: 64px;
     border-radius: 40px;
-    margin-top: 16px;
-    margin-left: 24px;
-}
-
-.UserContainer :is(div) {
-    margin-top: 24px;
-    margin-left: 16px;
-    text-align: start;
-}
-
-.UserContainer :is(p):first-child {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 24px;
-    color: #2E384D;
-}
-
-.UserContainer :is(p):last-child {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 19px;
-    color: #666666;
-}
-
-.UserContainer p> :is(img) {
-    width: 14px;
-    height: 16px;
-    margin-top: 7px;
-    margin-left: 0px;
 }
 
 .TableContainer :is(tr) {
@@ -137,14 +103,18 @@
 }
 
 .TableContainer tbody :is(span) {
-    color: var(--blue);
+    color: var(--blue); 
 }
 
 .TableContainer tbody :is(td) {
     color: #666666;
     font-weight: 500;
     font-size: 1rem;
-    line-height: 19px;
+    line-height: 19px;  
+}
+
+.tdDescription {    
+   max-width: 200px;
 }
 
 .ContentContainer {
@@ -167,10 +137,24 @@
     line-height: 16px;
     margin-top: 30px;
     margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .ContentContainer :is(input) {
-    height: 80px;
+    height: 50px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 16px;
+    color: var(--grey);
+    border: 2px solid #666666;
+    outline-color: #414AA3;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.ContentContainer :is(textarea){
+    height: 50px;
     padding: 10px;
     font-size: 1rem;
     font-weight: 700;
@@ -215,4 +199,33 @@
 .Container form :is(button):hover {
     background: #4953B8;
     border-radius: 5px;
+}
+
+.UserContainer  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.UserContainer :is(div){
+    margin-top: 24px;
+    margin-left: 16px;
+}
+
+.UserContainer :is(p):first-child {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 24px;
+    color: #2E384D;   
+}
+.UserContainer :is(p):last-child {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 19px;
+    color: #666666;   
+}
+
+.UserContainer p > :is(img){
+    width: 14px;
+    height: 16px;
 }

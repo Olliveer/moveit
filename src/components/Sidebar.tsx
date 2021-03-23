@@ -10,7 +10,7 @@ import styles from '../styles/components/Sidebar.module.css';
 export function Sidebar({ admin = null }) {  
   return (
     <aside className={styles.container}>
-      <img src="logo-side.svg" alt="Move it Logo" />
+      <img src="/logo-side.svg" alt="Move it Logo" />
 
       <div>
         {admin ? (

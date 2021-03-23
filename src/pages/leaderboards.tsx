@@ -55,7 +55,7 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
     )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
     const db = await connectToDatabase(process.env.MONGODB_URI);
 
     const inner = await db.collection('users').aggregate(

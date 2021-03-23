@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { GetServerSideProps } from 'next';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
+import { connectToDatabase } from '../util/mongodb';
 
 interface Challenge {
     type: string;
@@ -58,7 +60,13 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const [name] = useState(rest.user.name);
     const [email] = useState(rest.user.email);
 
-    function rank() {
+
+
+    useEffect(() => {
+        Notification.requestPermission();
+    }, [])
+
+    useEffect(() => {
         axios.post('api/rank/rank', {
             name,
             email,
@@ -67,14 +75,6 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
             challengesCompleted,
             totalExperience,
         })
-    }
-
-    useEffect(() => {
-        Notification.requestPermission();
-    }, [])
-
-    useEffect(() => {
-        rank();
     }, [level, currentExperience, challengesCompleted])
 
     function levelUp() {
