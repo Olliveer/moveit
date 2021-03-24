@@ -103,7 +103,8 @@
 }
 
 .TableContainer tbody :is(span) {
-    color: var(--blue); 
+    color: var(--blue);
+    margin-right: 5px; 
 }
 
 .TableContainer tbody :is(td) {

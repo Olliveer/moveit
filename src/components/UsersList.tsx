@@ -1,8 +1,5 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession } from 'next-auth/client'
-import React, { useState } from 'react'
-import styles from '../styles/pages/All.module.css';
-import { connectToDatabase } from '../util/mongodb'
+import React, { useState } from 'react';
+import styles from '../styles/components/All.module.css';
 
 interface UserProps {
     _id: string;

@@ -2,7 +2,7 @@ import { Switch } from '@material-ui/core';
 import React, { FormEvent, useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
-import styles from '../styles/pages/Users.module.css';
+import styles from '../styles/components/Users.module.css';
 
 interface UserProps {
   _id: string;

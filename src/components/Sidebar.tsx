@@ -59,7 +59,7 @@ export function Sidebar({ admin = null }) {
       </div>
 
       <footer>
-        <button onClick={() => signOut({ redirect: false })}>
+        <button onClick={() => signOut()}>
           <AiOutlinePoweroff size={32} />
         </button>
       </footer>

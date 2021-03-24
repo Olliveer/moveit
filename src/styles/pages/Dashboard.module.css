@@ -6,24 +6,24 @@
 .Container {
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
-  margin: 50px auto;
+  /* max-width: 1200px; */
+  margin: 0px auto;
 }
 
-.Container>h1 {
+/* .Container>h1 {
   font-weight: 600;
   font-size: 2.25rem;
   line-height: 46px;
   margin-top: 10px;
   color: var(--title);
   text-align: start !important;
-}
+} */
 
-
+/* 
 .ContentContainer {
   margin-top: 10px;
   display: flex;
   width: 100;
   background: chartreuse;
   height: 100px;
-}
+} */

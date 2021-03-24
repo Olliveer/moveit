@@ -28,6 +28,9 @@
     "react-toastify": "^7.0.3",
     "styled-components": "^5.2.1"
   },
+  "peerOptionalDependencies": {
+    "mongodb": "^3.6.0"
+  },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.31",

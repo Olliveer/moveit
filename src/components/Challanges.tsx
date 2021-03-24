@@ -3,7 +3,7 @@ import React, { FormEvent, useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import ToastAnimated, { showToast } from '../components/Toast';
-import styles from '../styles/pages/Challenges.module.css';
+import styles from '../styles/components/Challenges.module.css';
 
 interface ChallengeProps {
   _id: string;

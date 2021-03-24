@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, level, currentExperience, challengesCompleted, totalExperience } = req.body;
 
     const users = db.collection('users');
-    const user = await users.findOne({ email: email, name: name });
+    const user = await users.findOne({ email: email });
     const rank = db.collection('rank');
     const userRank = await rank.findOne({ user_id: user._id });
 

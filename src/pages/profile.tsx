@@ -31,7 +31,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   return (
     <div className={styles.Container}>
       <ToastAnimated />
-      <Sidebar />
+      <Sidebar admin={props.user.admin} />
       <h1>Profile</h1>
       <div className={styles.FormContainer}>
         <form onSubmit={handleSubmit} className="edit-user-form">
