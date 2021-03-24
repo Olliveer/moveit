@@ -36,6 +36,7 @@ export default function Dashboard(props: InferGetServerSidePropsType<typeof getS
             <DashCards 
             totalUsers={props.totalUsers}
             totalRank={props.totalRank}
+            totalChallenges={props.totalChallenges}
             totalAdmins={props.totalAdmins} 
             set={set}
              />
@@ -58,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 
     const user = await db.collection('users').findOne({ email: session.user.email });
-    const totalUsers = await db.collection('users').countDocuments();
+    const totalUsers = await db.collection('users').find().count();
 
     const admins = await db.collection('users').find({ admin: true }).toArray();
     const adminData = JSON.parse(JSON.stringify(admins));
@@ -68,6 +69,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     
     
     const challenges = await db.collection('challenges').find().toArray();
+    const totalChallenges = await db.collection('challenges').find().count();
     const challengesData = JSON.parse(JSON.stringify(challenges));
 
     if (!user.admin) {
@@ -90,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 $unwind: '$position'
             }
         ]
-    ).sort({ createdAt: -1 }).limit(100).toArray();
+    ).sort({ createdAt: -1 }).limit(50).toArray();
 
     const list = JSON.parse(JSON.stringify(inner));
 
@@ -100,6 +102,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
             totalUsers: totalUsers,
             totalRank: totalRank,
             totalAdmins: totalAdmins,
+            totalChallenges: totalChallenges,
             users: list,
             admins: adminData,
             challenges: challengesData

@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineOrderedList, AiOutlinePlus, AiOutlineUndo, AiOutlineUserAdd } from 'react-icons/ai';
 import styles from '../styles/components/DashCards.module.css';
 
-export default function DashCards({ totalUsers,totalRank, totalAdmins, set }) {
+export default function DashCards({ totalUsers,totalRank, totalChallenges, totalAdmins, set }) {
 
     function resetRank(){
         alert('resetar rank')
@@ -31,7 +31,7 @@ export default function DashCards({ totalUsers,totalRank, totalAdmins, set }) {
             <div>
                 <header>
                     <h1>Exercícios</h1>
-                    <span>{totalUsers}</span>
+                    <span>{totalChallenges}</span>
                 </header>
                 <footer>
                     <button onClick={() => set('challenges')}><AiOutlinePlus size={40} /></button>

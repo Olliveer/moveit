@@ -1,8 +1,12 @@
 import { Switch } from '@material-ui/core';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { FormEvent, useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
+import swal from 'sweetalert';
 import styles from '../styles/components/Users.module.css';
+import ToastAnimated, { showToast } from './Toast';
 
 interface UserProps {
   _id: string;
@@ -11,10 +15,10 @@ interface UserProps {
   image: string;
 }
 
-export default function Users({admins}) {
+export default function Users({ admins }) {
+  const router = useRouter();
   const [userList, setUseList] = useState(true);
   const [userAdd, setUserAdd] = useState(false);
-  const [adminList] = useState(admins);
   const [name, setName] = useState('')
   const [email, setEmail] = useState('');
   const [admin, setAdmin] = React.useState({
@@ -28,6 +32,34 @@ export default function Users({admins}) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+
+    axios.post('api/profile/admin', {
+      name,
+      email,
+      admin: admin.checkedB
+    }).then(res => showToast({ type: 'default', message: res.data.message }))
+      .catch(err => showToast({ type: 'error', message: err.data.message }))
+      .finally(() => back());
+  }
+
+  function delAdmin(id: string) {
+    swal({
+      title: "Tem certeza que deseja excluír?",
+      text: "Depois de excluído, você não será capaz de recuperar!",
+      icon: "warning",
+      buttons: ['Não', 'Sim'],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          axios.delete('api/profile/admin', {
+            params: { id }
+          }).then(() => router.push('/beta'));
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+        }
+      })
   }
 
   function newUser() {
@@ -36,12 +68,14 @@ export default function Users({admins}) {
   }
 
   function back() {
+    router.push('/beta')
     setUserAdd(false);
     setUseList(true);
   }
 
   return (
     <div className={styles.Container}>
+      <ToastAnimated />
       <h1>Administradores</h1>
       {userList && (
         <div className={styles.TableContainer}>
@@ -64,12 +98,19 @@ export default function Users({admins}) {
 
                   </td>
                   <td><span>{user.email}</span></td>
-                  <td><button><BsTrash size={32} /></button> <button><AiOutlineEdit size={32} /></button></td>
+                  <td>
+                    <button onClick={() => delAdmin(user._id)}>
+                      <BsTrash size={32} />
+                    </button>
+                    <button>
+                      <AiOutlineEdit size={32} />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <button className={styles.ButtonAdd} onClick={newUser}><AiOutlinePlus size={32} /></button>
+          <button className={styles.ButtonAdd} onClick={newUser} ><AiOutlinePlus size={32} /></button>
         </div>
 
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../styles/components/All.module.css';
 
 interface UserProps {
@@ -15,7 +15,6 @@ interface UserProps {
 }
 
 export default function UsersList({users}) {
-    const [allUsers] = useState(users);
     return (
         <div className={styles.Container}>
             <h1>Usuários</h1>
