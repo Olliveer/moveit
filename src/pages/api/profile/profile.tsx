@@ -10,10 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const users = db.collection('users');
     const user = await users.findOne({ _id: ObjectId(id) })
 
-    console.log(user)
-
     if (!user) {
-        return res.status(201).json({ message: 'Not possible to update, try again later' });
+        return res.status(201).json({ message: 'Não foi possível atualizar, tente mais tarde' });
     }
 
     await users.updateOne({ _id: user._id }, {
@@ -23,5 +21,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
     })
 
-    return res.status(201).json({ message: `User ${name} updated` });
+    return res.status(201).json({ message: `Usuário ${name} atualizado` });
 }

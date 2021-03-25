@@ -59,7 +59,8 @@
 
 .TableContainer table> tbody :is(button):first-child{
     background: var(--red);
-    color: var(--white)
+    color: var(--white);
+    margin-right: 5px;
 }
 
 .TableContainer table> tbody :is(button):first-child:hover{

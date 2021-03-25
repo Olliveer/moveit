@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { FormEvent, useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
+import swal from 'sweetalert';
 import ToastAnimated, { showToast } from '../components/Toast';
 import styles from '../styles/components/Challenges.module.css';
 
@@ -12,7 +14,8 @@ interface ChallengeProps {
   amount: number;
 }
 
-export default function Challenges({challenges}) {
+export default function Challenges({ challenges }) {
+  const router = useRouter();
   const [list, setList] = useState(true);
   const [add, setAdd] = useState(false);
   const [ListChallenges] = useState(challenges);
@@ -20,16 +23,43 @@ export default function Challenges({challenges}) {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
 
+  const notify = () => showToast({ type: 'warning', message: 'Preencha os campos para adicionar a atividade 😃' });
+
+
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    axios.post('../api/challenges', {
-      type,
-      description,
-      amount
-    }).then(res => showToast({ type: 'default', message: res.data.message }))
-      .catch(error => showToast({ type: 'error', message: error.message }))
-      .finally(() => back())
 
+    if (type === '' || description === '' || amount === '') {
+      notify();
+    } else {
+      axios.post('../api/challenges', {
+        type,
+        description,
+        amount
+      }).then(res => showToast({ type: 'default', message: res.data.message }))
+        .catch(error => showToast({ type: 'error', message: error.response.data.message }))
+        .finally(() => back())
+    }
+  }
+
+  function delChallenge(id: string) {
+    swal({
+      title: "Tem certeza que deseja excluír?",
+      text: "Depois de excluído, você não será capaz de recuperar!",
+      icon: "warning",
+      buttons: ['Não', 'Sim'],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          axios.delete('api/challenges', {
+            params: { id }
+          }).then(() => router.replace('/beta'));
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+        }
+      })
   }
 
   function newChallenge() {
@@ -38,6 +68,7 @@ export default function Challenges({challenges}) {
   }
 
   function back() {
+    router.push('/beta')
     setAdd(false);
     setList(true);
   }
@@ -62,11 +93,18 @@ export default function Challenges({challenges}) {
                 <tr key={challenge._id}>
                   <td className={styles.UserContainer}>
                     <img src={(challenge.type === 'body') ? '/icons/body.svg' : '/icons/eye.svg'} alt="User Image" />
-                   
+
                   </td>
                   <td className={styles.tdDescription}><span>{challenge.description}</span></td>
                   <td><span>{challenge.amount}</span>XP</td>
-                  <td><button><BsTrash size={32} /></button> <button><AiOutlineEdit size={32} /></button></td>
+                  <td>
+                    <button onClick={() => delChallenge(challenge._id)}>
+                      <BsTrash size={32} />
+                    </button>
+                    <button>
+                      <AiOutlineEdit size={32} />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -119,38 +157,3 @@ export default function Challenges({challenges}) {
     </div>
   )
 }
-
-
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const db = await connectToDatabase(process.env.MONGODB_URI);
-
-//   const session = await getSession(ctx);
-
-//   if (!session) {
-//     ctx.res.writeHead(307, { Location: '/' });
-//     ctx.res.end();
-//     return { props: {} }
-//   }
-
-//   const user = await db.collection('users').findOne({ email: session.user.email });
-//   const totalUsers = await db.collection('users').countDocuments();
-//   const rank = await db.collection('rank').countDocuments();
-//   const challenges = await db.collection('challenges').find().toArray();
-
-//   if (!user.admin) {
-//     ctx.res.writeHead(307, { Location: '/' });
-//     ctx.res.end();
-//     return { props: {} }
-//   }
-//   const data = JSON.parse(JSON.stringify(challenges));
-
-//   console.log(data)
-//   return {
-//     props: {
-//       admin: user.admin,
-//       totalUsers: totalUsers,
-//       rank: rank,
-//       challenges: data
-//     }
-//   }
-// }

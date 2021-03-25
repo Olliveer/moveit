@@ -18,6 +18,22 @@
   padding: 10px;
 }
 
+.CardsContainer div:last-child{
+  background: var(--blue);
+}
+
+.CardsContainer div:last-child h1{
+  color: var(--white);
+}
+
+.CardsContainer div:last-child span{
+  color: var(--white);
+}
+
+.CardsContainer div:last-child footer>button:hover{
+  background: var(--green) !important;
+}
+
 .CardsContainer header {
   display: flex;
   flex-direction: column;

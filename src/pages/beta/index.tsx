@@ -92,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
                 $unwind: '$position'
             }
         ]
-    ).sort({ createdAt: -1 }).limit(50).toArray();
+    ).sort({ createdAt: 1 }).limit(50).toArray();
 
     const list = JSON.parse(JSON.stringify(inner));
 
