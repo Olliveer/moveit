@@ -1,6 +1,6 @@
 .container {
-    width: 100%;
-    /* max-width: 992px; */
+    width: 100vw;
+    height: 100vh;
     background: rgba(89, 101, 224, 1);
     flex-direction: column;
 }

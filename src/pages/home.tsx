@@ -1,7 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getSession, session, useSession } from 'next-auth/client';
+import { getSession } from 'next-auth/client';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 import { ChallangeBox } from '../components/ChallengeBox';
 import { CompleteChallanges } from '../components/CompleteChallanges';
 import { Countdown } from '../components/Countdown';
@@ -49,7 +48,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db = await connectToDatabase(process.env.MONGODB_URI);
+  const db = await connectToDatabase();
 
   // const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);

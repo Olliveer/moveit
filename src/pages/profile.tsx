@@ -102,7 +102,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db = await connectToDatabase(process.env.MONGODB_URI);
+  const db = await connectToDatabase();
 
   const session = await getSession(ctx);
 

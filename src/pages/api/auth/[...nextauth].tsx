@@ -4,7 +4,6 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 
 const options = {
-    // Configure one or more authentication providers
     providers: [
         Providers.Email({
             server: {
@@ -41,14 +40,10 @@ const options = {
     pages: {
         error: '/index',
         newUser: null,
-    },
-    callback: {
-        
     }
 }
 
 
-export default (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
-    NextAuth(req, res, options);
+export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => NextAuth(req, res, options);
 
 

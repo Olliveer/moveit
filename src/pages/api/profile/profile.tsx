@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../../util/mongodb";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const db = await connectToDatabase(process.env.MONGODB_URI);
+    const db = await connectToDatabase();
 
     const { id, name, email } = req.body;
 

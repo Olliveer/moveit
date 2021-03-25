@@ -4,7 +4,7 @@ import { connectToDatabase } from "../../../util/mongodb";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
-    const db = await connectToDatabase(process.env.MONGODB_URI);
+    const db = await connectToDatabase();
 
     switch (method) {
         case 'DELETE':
