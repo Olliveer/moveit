@@ -2,7 +2,7 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-import { AiFillFacebook, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
+import { AiFillFacebook, AiFillGithub, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
 import styles from '../styles/pages/Index.module.css';
 
 

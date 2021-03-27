@@ -1,7 +1,8 @@
-import axios from 'axios';
+import faunadb from 'faunadb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+import FaunaAdapter from '../../../util/nextauth/fauna-adapter';
 
 const options = {
     providers: [
@@ -22,13 +23,26 @@ const options = {
         }),
         // Providers.GitHub({
         //     clientId: process.env.GITHUB_ID,
-        //     clientSecret: process.env.GITHUB_SECRET
+        //     clientSecret: process.env.GITHUB_SECRET,
+        //     scope: 'user:email',
+        //     // @ts-ignore
+        //     profile: (profileData) => {
+        //         return {
+        //             id: profileData.id,
+        //             name: profileData.name || profileData.login,
+        //             email: profileData.email,
+        //             image: profileData.avatar_url,
+        //             username: profileData.login,
+        //         }
+        //     },
         // }),
         Providers.Twitter({
             clientId: process.env.TWITTER_ID,
             clientSecret: process.env.TWITTER_SECRET
         }),
     ],
+    adapter: FaunaAdapter.Adapter(null, {}),
+    // secret: process.env.SECRET_KEY,
     session: {
         jwt: true,
         maxAge: 2 * 60 * 60 * 60,
@@ -36,14 +50,15 @@ const options = {
         encryption: true,
         secret: process.env.SECRET_KEY,
     },
-    database: process.env.MONGODB_URI,
+    debug: false,
+    // database: process.env.MONGODB_URI,
     pages: {
         error: '/index',
         newUser: null,
     }
+
 }
 
-
-export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => NextAuth(req, res, options);
+export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
 
 

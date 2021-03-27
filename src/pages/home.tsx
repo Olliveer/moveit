@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getSession } from 'next-auth/client';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { ChallangeBox } from '../components/ChallengeBox';
 import { CompleteChallanges } from '../components/CompleteChallanges';
 import { Countdown } from '../components/Countdown';
@@ -12,8 +14,10 @@ import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
 import { connectToDatabase } from '../util/mongodb';
 
-export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {  
-  
+export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+ 
+
+
   return (
     <ChallengeProvider
       level={props.level}
@@ -21,13 +25,13 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       challengesCompleted={props.challengesCompleted}
       user={props.user}
       rank={props.rank}
-    >    
-      <Sidebar admin={props.admin}/>
+    >
+      <Sidebar admin={props.admin} />
       <div className={styles.container}>
         <Head>
           <title>Início | move.it</title>
         </Head>
-    
+
         <ExperienceBar />
         <CountdownProvider>
           <section>
@@ -36,7 +40,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
               <CompleteChallanges />
               <Countdown />
             </div>
-              
+
             <div>
               <ChallangeBox />
             </div>

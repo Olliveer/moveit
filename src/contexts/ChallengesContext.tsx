@@ -77,6 +77,17 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
         })
     }, [level, currentExperience, challengesCompleted])
 
+    // useEffect(() => {
+    //     axios.post('api/rank', {
+    //         name,
+    //         email,
+    //         level,
+    //         currentExperience,
+    //         challengesCompleted,
+    //         totalExperience,
+    //     })
+    // }, [level, currentExperience, challengesCompleted])
+
     function levelUp() {
         setLevel(level + 1);
         setIsLevelUpOpen(true);

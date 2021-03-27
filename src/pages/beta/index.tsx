@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashCards from '../../components/DashCards'
 import { Sidebar } from '../../components/Sidebar'
 import styles from '../../styles/pages/Index.module.css'
@@ -8,10 +8,14 @@ import { connectToDatabase } from '../../util/mongodb'
 import UsersList from '../../components/UsersList';
 import Users from '../../components/Users'
 import Challenges from '../../components/Challanges'
+import axios from 'axios'
+import useSWR from 'swr'
 
 
 export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [content, setContent] = useState();
+    const [dataUsers, setDataUsers] = useState([]);
+    // const { data: adminList, mutate } = useSWR('api/users/admin');
 
     const set = (value) => {
         setContent(value)
@@ -20,9 +24,9 @@ export default function Dashboard(props: InferGetServerSidePropsType<typeof getS
     function renderSwitch(params) {
         switch (params) {
             case 'users':
-                return <UsersList users={props.users} />;
+                return <UsersList users={dataUsers} />;
             case 'admin':
-                return <Users admins={props.admins} />
+                return <Users />
             case 'challenges':
                 return <Challenges challenges={props.challenges} />
             default:
@@ -33,13 +37,13 @@ export default function Dashboard(props: InferGetServerSidePropsType<typeof getS
     return (
         <div className={styles.Container}>
             <Sidebar admin={props.admin} />
-            <DashCards 
-            totalUsers={props.totalUsers}
-            totalRank={props.totalRank}
-            totalChallenges={props.totalChallenges}
-            totalAdmins={props.totalAdmins} 
-            set={set}
-             />
+            <DashCards
+                totalUsers={props.totalUsers}
+                totalRank={props.totalRank}
+                totalChallenges={props.totalChallenges}
+                totalAdmins={props.totalAdmins}
+                set={set}
+            />
             <div className={styles.ContentContainer}>
                 {renderSwitch(content)}
             </div>
@@ -66,8 +70,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const totalAdmins = await db.collection('users').find({ admin: true }).count();
 
     const totalRank = await db.collection('rank').countDocuments();
-    
-    
+
+
     const challenges = await db.collection('challenges').find().toArray();
     const totalChallenges = await db.collection('challenges').find().count();
     const challengesData = JSON.parse(JSON.stringify(challenges));

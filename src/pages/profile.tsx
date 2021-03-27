@@ -2,7 +2,7 @@ import axios from 'axios'
 import { ObjectId } from 'bson'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession, useSession } from 'next-auth/client'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import ToastAnimated, { showToast } from '../components/Toast'
 import styles from '../styles/pages/Profile.module.css'
@@ -14,6 +14,17 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   const [name, setName] = useState(props.user.name);
   const [email, setEmail] = useState(props.user.email)
   const [edit, setEdit] = useState(false);
+  const [userData, setUserData] = useState();
+
+  const getUser = async () => {
+    await axios.post('api/getUsers/byEmail', { id }).then(res => setUserData(res.data)).catch(e => console.log(e));
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [])
+
+  console.log('USERDATA ->', userData)
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -21,7 +32,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
       id,
       name,
       email
-    }).then(res => showToast({type: 'default', message: res.data.message })).catch().finally(() => setEdit(false))
+    }).then(res => showToast({ type: 'default', message: res.data.message })).catch().finally(() => setEdit(false))
   }
 
   function back() {
@@ -80,7 +91,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
 
                 <h1>E-mail</h1>
                 <p>{email}</p>
-                <button onClick={() =>  setEdit(true)}>
+                <button onClick={() => setEdit(true)}>
                   Editar
                 </button>
               </div>
