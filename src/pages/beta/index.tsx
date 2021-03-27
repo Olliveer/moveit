@@ -1,21 +1,18 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import Challenges from '../../components/Challanges'
 import DashCards from '../../components/DashCards'
 import { Sidebar } from '../../components/Sidebar'
+import Users from '../../components/Users'
+import UsersList from '../../components/UsersList'
 import styles from '../../styles/pages/Index.module.css'
 import { connectToDatabase } from '../../util/mongodb'
-import UsersList from '../../components/UsersList';
-import Users from '../../components/Users'
-import Challenges from '../../components/Challanges'
-import axios from 'axios'
-import useSWR from 'swr'
 
 
 export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [content, setContent] = useState();
     const [dataUsers, setDataUsers] = useState([]);
-    // const { data: adminList, mutate } = useSWR('api/users/admin');
 
     const set = (value) => {
         setContent(value)
@@ -108,7 +105,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
             totalAdmins: totalAdmins,
             totalChallenges: totalChallenges,
             users: list,
-            admins: adminData,
             challenges: challengesData
         }
     }
