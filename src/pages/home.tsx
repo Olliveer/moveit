@@ -12,6 +12,7 @@ import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
+import { client, q } from '../util/faunaDb';
 import { connectToDatabase } from '../util/mongodb';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -24,6 +25,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       currentExperience={props.currentExperience}
       challengesCompleted={props.challengesCompleted}
       user={props.user}
+      userId={props.userId}
       rank={props.rank}
     >
       <Sidebar admin={props.admin} />
@@ -62,6 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
     return { props: {} }
   }
+  const userId = await client.query(q.Get(q.Match(q.Index('get_user_by_email'), [session.user.email])));
   const user = await db.collection('users').findOne({ email: session.user.email });
   const data = await db.collection('rank').find({ user_id: user._id }).toArray();
   const rank = JSON.parse(JSON.stringify(data));
@@ -72,6 +75,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       // currentExperience: Number(currentExperience),
       // challengesCompleted: Number(challengesCompleted),
       user: session.user,
+      userId: userId.data.id,
       rank: rank[0] ?? {},
       admin: user.admin ?? null
     }

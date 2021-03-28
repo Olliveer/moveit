@@ -32,7 +32,7 @@ export default function Users() {
   const { data: listAdm, mutate } = useSWR('api/users/admin');
 
   if (!listAdm) {
-    return <h1>Loading...</h1>
+    return <div>Loding...</div>
   }
 
   const deleteUser = async (ref) => {

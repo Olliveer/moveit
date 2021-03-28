@@ -33,6 +33,7 @@ interface UserRank {
 }
 
 interface User {
+    id: string;
     name: string;
     email: string;
     image: string;
@@ -44,6 +45,7 @@ interface ChallengesProviderProps {
     currentExperience: number;
     challengesCompleted: number;
     user: User;
+    userId: string;
     rank: UserRank;
 }
 
@@ -57,10 +59,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const [isLevelUpOpen, setIsLevelUpOpen] = useState(false);
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
     const [totalExperience, setTotalExperience] = useState(rest.rank.totalExperience ?? 0);
-    const [name] = useState(rest.user.name);
-    const [email] = useState(rest.user.email);
-
-
+    const [id] = useState(rest.userId);
 
     useEffect(() => {
         Notification.requestPermission();
@@ -68,8 +67,7 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
 
     useEffect(() => {
         axios.post('api/rank/rank', {
-            name,
-            email,
+            userId: id,
             level,
             currentExperience,
             challengesCompleted,

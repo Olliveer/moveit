@@ -62,7 +62,6 @@
 }
 
 .UserContainer :is(div) {
-    margin-top: 24px;
     margin-left: 16px;
     text-align: start;
 }
@@ -74,12 +73,12 @@
     color: #2E384D;
 }
 
-.UserContainer :is(p):last-child {
+/* .UserContainer :is(p):last-child {
     font-size: 1rem;
     font-weight: 400;
     line-height: 19px;
     color: #666666;
-}
+} */
 
 .UserContainer p> :is(img) {
     width: 14px;

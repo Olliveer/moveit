@@ -1,4 +1,5 @@
 import React from 'react';
+import useSWR from 'swr';
 import styles from '../styles/components/All.module.css';
 
 interface UserProps {
@@ -14,7 +15,14 @@ interface UserProps {
     }
 }
 
-export default function UsersList({users}) {
+export default function UsersList({}) {
+    const {data: usersList, mutate} = useSWR('api/users');
+
+    if (!usersList) {
+        return <h1>Loading</h1>;
+    }
+
+
     return (
         <div className={styles.Container}>
             <h1>Usuários</h1>
@@ -28,18 +36,18 @@ export default function UsersList({users}) {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user: UserProps, index: number) => (
-                            <tr key={user._id}>
+                        {usersList.map((user: UserProps, index: number) => (
+                            <tr key={user.data.id}>
                                 <td className={styles.UserContainer}>
-                                    <img src={user.image || 'user-placeholder.png'} alt="User Image" />
+                                    <img src={user.data.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
-                                        <p> {user.name ?? user.email}</p>
-                                        <p> <img src="/icons/level.svg" alt="Level" /> Level {user.position.level}</p>
+                                        <p> {user.data.name ?? user.data.email}</p>
+                                        {/* <p> <img src="/icons/level.svg" alt="Level" /> Level {user.position.level}</p> */}
                                     </div>
 
                                 </td>
-                                <td><span>{user.email}</span></td>
-                                <td><span>{user.position.challengesCompleted}</span></td>
+                                <td><span>{user.data.email}</span></td>
+                                {/* <td><span>{user.position.challengesCompleted}</span></td> */}
                             </tr>
                         ))}
                     </tbody>
