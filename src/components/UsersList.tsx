@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import styles from '../styles/components/All.module.css';
 
@@ -15,13 +15,12 @@ interface UserProps {
     }
 }
 
-export default function UsersList({}) {
+export default function UsersList() {
     const {data: usersList, mutate} = useSWR('api/users');
 
     if (!usersList) {
         return <h1>Loading</h1>;
     }
-
 
     return (
         <div className={styles.Container}>
@@ -37,17 +36,16 @@ export default function UsersList({}) {
                     </thead>
                     <tbody>
                         {usersList.map((user: UserProps, index: number) => (
-                            <tr key={user.data.id}>
+                            <tr key={index}>
                                 <td className={styles.UserContainer}>
                                     <img src={user.data.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
-                                        <p> {user.data.name ?? user.data.email}</p>
-                                        {/* <p> <img src="/icons/level.svg" alt="Level" /> Level {user.position.level}</p> */}
+                                        <p> {user.data.name ?? user.data.email}</p>                                        
                                     </div>
 
                                 </td>
                                 <td><span>{user.data.email}</span></td>
-                                {/* <td><span>{user.position.challengesCompleted}</span></td> */}
+                                <td><span>{user.data.createdAt}</span></td>
                             </tr>
                         ))}
                     </tbody>

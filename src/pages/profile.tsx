@@ -5,6 +5,7 @@ import { getSession, useSession } from 'next-auth/client'
 import { FormEvent, useEffect, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import ToastAnimated, { showToast } from '../components/Toast'
+import { getUserByEmail, userProfile } from '../services/users'
 import styles from '../styles/pages/Profile.module.css'
 import { connectToDatabase } from '../util/mongodb'
 
@@ -14,17 +15,6 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   const [name, setName] = useState(props.user.name);
   const [email, setEmail] = useState(props.user.email)
   const [edit, setEdit] = useState(false);
-  const [userData, setUserData] = useState();
-
-  const getUser = async () => {
-    await axios.post('api/getUsers/byEmail', { id }).then(res => setUserData(res.data)).catch(e => console.log(e));
-  }
-
-  useEffect(() => {
-    getUser();
-  }, [])
-
-  console.log('USERDATA ->', userData)
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -122,6 +112,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
     return { props: {} }
   }
+
+  const userP = await getUserByEmail(session.user.email)
+  const userAndRank = await userProfile(userP.data.id)
+  console.log('USER PROFILE', userAndRank);
 
   const user = await db.collection('users').findOne({ email: session.user.email });
 

@@ -21,13 +21,13 @@ export default function Dashboard(props: InferGetServerSidePropsType<typeof getS
     function renderSwitch(params) {
         switch (params) {
             case 'users':
-                return <UsersList users={dataUsers} />;
+                return <UsersList />;
             case 'admin':
                 return <Users />
             case 'challenges':
                 return <Challenges challenges={props.challenges} />
             default:
-                return <UsersList users={props.users} />;
+                return <UsersList />;
         }
     }
 

@@ -6,8 +6,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
     switch (method) {
       case 'POST':
-        const { name, email, admin } = req.body;
-        await createAdmin({ name, email, admin });
+        const { name, email, admin, createdAt } = req.body;
+        await createAdmin({ name, email, admin, createdAt });
         (admin === true)
           ? res.status(201).json({ message: `Admin ${name} created` })
           : res.status(201).json({ message: `User ${name} created` });

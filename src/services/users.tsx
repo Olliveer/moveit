@@ -1,6 +1,7 @@
 import { q, client } from '../util/faunaDb';
 
 export const createUser = (data) => {
+    console.log('Adataaaaaa', data);
     return client.query(q.Create(q.Collection('users'), { data }))
 }
 
@@ -26,6 +27,26 @@ export const getAllUsers = () => {
         )
     );
 }
+
+export const getUserByEmail = (data) => {
+    return client.query(q.Get(q.Match(q.Index('get_user_by_email'), [data])));
+}
+
+export const userProfile = (data) => {
+    return client.query(
+        q.Map(
+            q.Paginate(
+              q.Join(
+                q.Match(q.Index("user_rank"), data),
+                q.Index("rank_user")
+              )
+            ),
+            q.Lambda("X", q.Get(q.Var("X")))
+          )
+    )
+}
+
+
 
 export const getAllAdmin = () => {
     return client.query(

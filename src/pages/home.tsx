@@ -1,3 +1,4 @@
+import { PrismaClient } from '.prisma/client';
 import axios from 'axios';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getSession } from 'next-auth/client';
@@ -11,24 +12,23 @@ import { Profile } from '../components/Profile';
 import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
+import { createRank, getRankByid } from '../services/rank';
+import { getUserByEmail } from '../services/users';
 import styles from '../styles/pages/Home.module.css';
 import { client, q } from '../util/faunaDb';
 import { connectToDatabase } from '../util/mongodb';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
- 
-
-
   return (
     <ChallengeProvider
       level={props.level}
       currentExperience={props.currentExperience}
       challengesCompleted={props.challengesCompleted}
+      session={props.session}
       user={props.user}
-      userId={props.userId}
       rank={props.rank}
     >
-      <Sidebar admin={props.admin} />
+      <Sidebar admin={props.user.admin} />
       <div className={styles.container}>
         <Head>
           <title>Início | move.it</title>
@@ -38,7 +38,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
         <CountdownProvider>
           <section>
             <div>
-              <Profile session={props.user} />
+              <Profile session={props.session} />
               <CompleteChallanges />
               <Countdown />
             </div>
@@ -53,9 +53,9 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db = await connectToDatabase();
+const prisma = new PrismaClient();
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);
 
@@ -64,19 +64,27 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
     return { props: {} }
   }
-  const userId = await client.query(q.Get(q.Match(q.Index('get_user_by_email'), [session.user.email])));
-  const user = await db.collection('users').findOne({ email: session.user.email });
-  const data = await db.collection('rank').find({ user_id: user._id }).toArray();
-  const rank = JSON.parse(JSON.stringify(data));
+
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.user.email
+    }
+  });
+  console.log('HOME USER', user)
+
+  const rank = await getRankByid(Number(user.id));
+
+  console.log('home rank', rank)
 
   return {
     props: {
       // level: Number(level),
       // currentExperience: Number(currentExperience),
       // challengesCompleted: Number(challengesCompleted),
-      user: session.user,
-      userId: userId.data.id,
-      rank: rank[0] ?? {},
+      session: session.user,
+      user: JSON.parse(JSON.stringify(user)) ?? {},
+      rank: JSON.parse(JSON.stringify(rank)) ?? {},
       admin: user.admin ?? null
     }
   }

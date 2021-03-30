@@ -49,17 +49,11 @@ export default function Users() {
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    // axios.post('api/profile/admin', {
-    //   name,
-    //   email,
-    //   admin: admin.checkedB
-    // }).then(res => showToast({ type: 'default', message: res.data.message }))
-    //   .catch(err => showToast({ type: 'error', message: err.response.data.message }))
-    //   .finally(() => back());
     axios.post('api/users/admin', {
       name,
       email,
-      admin: admin.checkedB
+      admin: admin.checkedB,
+      createdAt: new Date().toLocaleString() + '',
     }).then(res => showToast({ type: 'default', message: res.data.message }))
       .catch(err => showToast({ type: 'error', message: err.response.data.message }))
       .finally(() => back());

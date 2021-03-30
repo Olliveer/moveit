@@ -11,7 +11,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             await deleteUser(req.query.ref);
             res.json({ message: 'User deleted 🗑️' })
             break;
-
+            case 'GET':
+            
+            break;
         default:
             break;
     }

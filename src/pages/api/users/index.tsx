@@ -22,25 +22,3 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(500).json({ error: error.message });
   }
 }
-
-
-// try {
-//   const dbs = await client.query(
-//     q.Map(
-//       // iterate each item in result
-//       q.Paginate(
-//         // make paginatable
-//         q.Match(
-//           // query index
-//           q.Index("get_all_users") // specify source
-//         )
-//       ),
-//       q.Lambda(x => q.Get(x)) // lookup each result by its reference
-//     )
-//   );
-//   // ok
-//   res.status(200).json(dbs.data);
-// } catch (e) {
-//   // something went wrong
-//   res.status(500).json({ error: e.message });
-// }

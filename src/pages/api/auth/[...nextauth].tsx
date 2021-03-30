@@ -1,8 +1,10 @@
-import faunadb from 'faunadb';
+import { PrismaClient } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
+import Adapters from 'next-auth/adapters';
 import Providers from 'next-auth/providers';
-import FaunaAdapter from '../../../util/nextauth/fauna-adapter';
+
+const prisma = new PrismaClient();
 
 const options = {
     providers: [
@@ -41,7 +43,7 @@ const options = {
             clientSecret: process.env.TWITTER_SECRET
         }),
     ],
-    adapter: FaunaAdapter.Adapter(null, {}),
+    adapter: Adapters.Prisma.Adapter({ prisma }),
     // secret: process.env.SECRET_KEY,
     session: {
         jwt: true,

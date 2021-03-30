@@ -1,4 +1,5 @@
 {
     "WillLuke.nextjs.addTypesOnSave": true,
-    "WillLuke.nextjs.hasPrompted": true
+    "WillLuke.nextjs.hasPrompted": true,
+    "faunadb.adminSecretKey": "fnAEFQdS6pACBKSxHGyKIo-cOTQNbtZL6lzdltqD"
 }
