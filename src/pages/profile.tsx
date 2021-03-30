@@ -1,24 +1,22 @@
 import axios from 'axios'
-import { ObjectId } from 'bson'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, useSession } from 'next-auth/client'
-import { FormEvent, useEffect, useState } from 'react'
+import { getSession } from 'next-auth/client'
+import { FormEvent, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import ToastAnimated, { showToast } from '../components/Toast'
-import { getUserByEmail, userProfile } from '../services/users'
-import styles from '../styles/pages/Profile.module.css'
-import { connectToDatabase } from '../util/mongodb'
+import { getUserByEmail, getUserProfile } from '../services/users'
+
+import styles from '../styles/pages/Profile.module.css';
 
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [session, loading] = useSession()
-  const [id] = useState(props.user._id);
+  const [id] = useState(props.user.id);
   const [name, setName] = useState(props.user.name);
   const [email, setEmail] = useState(props.user.email)
   const [edit, setEdit] = useState(false);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    axios.post('api/profile/profile', {
+    axios.post('api/profile', {
       id,
       name,
       email
@@ -32,7 +30,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   return (
     <div className={styles.Container}>
       <ToastAnimated />
-      <Sidebar admin={props.user.admin} />
+      <Sidebar />
       <h1>Profile</h1>
       <div className={styles.FormContainer}>
         <form onSubmit={handleSubmit} className="edit-user-form">
@@ -64,11 +62,11 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
               </div>
 
               <div>
-                <h3>{props.user.position.level}</h3>
+                <h3>{props.user.rank.level}</h3>
                 <h1>Desafios</h1>
-                <p><span>{props.user.position.challengesCompleted}</span> completados</p>
+                <p><span>{props.user.rank.challengesCompleted}</span> completados</p>
                 <h1>experiência</h1>
-                <p><span>{props.user.position.totalExperience}</span> xp</p>
+                <p><span>{props.user.rank.totalExperience}</span> xp</p>
                 <img src="share-logo.svg" alt="" />
               </div>
             </section>
@@ -87,11 +85,11 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
               </div>
 
               <div>
-                <h3>{props.user.position.level}</h3>
+                <h3>{props.user.rank.level}</h3>
                 <h1>Desafios</h1>
-                <p><span>{props.user.position.challengesCompleted}</span> completados</p>
+                <p><span>{props.user.rank.challengesCompleted}</span> completados</p>
                 <h1>experiência</h1>
-                <p><span>{props.user.position.totalExperience}</span> xp</p>
+                <p><span>{props.user.rank.totalExperience}</span> xp</p>
                 <img src="share-logo.svg" alt="" />
               </div>
             </section>
@@ -103,8 +101,6 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const db = await connectToDatabase();
-
   const session = await getSession(ctx);
 
   if (!session) {
@@ -113,38 +109,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: {} }
   }
 
-  const userP = await getUserByEmail(session.user.email)
-  const userAndRank = await userProfile(userP.data.id)
-  console.log('USER PROFILE', userAndRank);
-
-  const user = await db.collection('users').findOne({ email: session.user.email });
-
-  const inner = await db.collection('users').aggregate(
-    [
-      {
-        $match: {
-          _id: ObjectId(`${user._id}`)
-        },
-      },
-      {
-        $lookup: {
-          from: 'rank',
-          localField: '_id',
-          foreignField: 'user_id',
-          as: 'position',
-        }
-      },
-      {
-        $unwind: '$position'
-      }
-    ]
-  ).sort({ currentExperience: -1 }).limit(100).toArray();
-
-  const data = JSON.parse(JSON.stringify(inner));
+  const user = await getUserByEmail(session.user.email);
+  const profile = await getUserProfile(user.id)
 
   return {
     props: {
-      user: data[0]
+      user: JSON.parse(JSON.stringify(profile))
     }
   }
 }

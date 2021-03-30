@@ -53,8 +53,6 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
   )
 }
 
-const prisma = new PrismaClient();
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
   const session = await getSession(ctx);
@@ -65,17 +63,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: {} }
   }
 
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session.user.email
-    }
-  });
-  console.log('HOME USER', user)
-
+  const user = await getUserByEmail(session.user.email);
   const rank = await getRankByid(Number(user.id));
-
-  console.log('home rank', rank)
 
   return {
     props: {
