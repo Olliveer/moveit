@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/client'
 import { FormEvent, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import ToastAnimated, { showToast } from '../components/Toast'
-import { getUserByEmail, getUserProfile } from '../services/users'
+import { getUserByEmail, getUserProfile, isAdmin } from '../services/users'
 
 import styles from '../styles/pages/Profile.module.css';
 
@@ -26,11 +26,12 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   function back() {
     setEdit(false);
   }
+  console.log(props.user.admin)
 
   return (
     <div className={styles.Container}>
       <ToastAnimated />
-      <Sidebar />
+      <Sidebar admin={props.user.admin} />
       <h1>Profile</h1>
       <div className={styles.FormContainer}>
         <form onSubmit={handleSubmit} className="edit-user-form">
@@ -111,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const user = await getUserByEmail(session.user.email);
   const profile = await getUserProfile(user.id)
-
+  
   return {
     props: {
       user: JSON.parse(JSON.stringify(profile))

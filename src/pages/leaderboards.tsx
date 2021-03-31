@@ -1,14 +1,15 @@
-import { GetStaticProps, InferGetServerSidePropsType } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import useSWR from "swr";
 import { Sidebar } from "../components/Sidebar";
+import { getAllRank } from "../services/rank";
 import styles from '../styles/pages/leaderbords.module.css';
-import { connectToDatabase } from "../util/mongodb";
 
 interface UserProps {
     _id: string;
     name: string;
     email: string;
     image: string;
-    position: {
+    rank: {
         level: number;
         challengesCompleted: number;
         currentExperience: number;
@@ -16,7 +17,7 @@ interface UserProps {
     }
 }
 
-export default function Leaderboards({ leaderboards }: InferGetServerSidePropsType<typeof getStaticProps>) {
+export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div className={styles.Container}>
             <Sidebar />
@@ -40,12 +41,12 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
                                     <img src={user.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
                                         <p> {user.name ?? user.email}</p>
-                                        <p> <img src="/icons/level.svg" alt="Level" /> Level {user.position.level}</p>
+                                        <p> <img src="/icons/level.svg" alt="Level" /> Level {user.rank.level}</p>
                                     </div>
 
                                 </td>
-                                <td><span>{user.position.challengesCompleted}</span> completados</td>
-                                <td><span>{user.position.totalExperience}</span> xp</td>
+                                <td><span>{user.rank.challengesCompleted}</span> completados</td>
+                                <td><span>{user.rank.totalExperience}</span> xp</td>
                             </tr>
                         ))}
                     </tbody>
@@ -55,30 +56,13 @@ export default function Leaderboards({ leaderboards }: InferGetServerSidePropsTy
     )
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-    const db = await connectToDatabase(process.env.MONGODB_URI);
+export const getStaticProps: GetStaticProps = async () => {
 
-    const inner = await db.collection('users').aggregate(
-        [
-            {
-                $lookup: {
-                    from: 'rank',
-                    localField: '_id',
-                    foreignField: 'user_id',
-                    as: 'position',
-                }
-            },
-            {
-                $unwind: '$position'
-            }
-        ]
-    ).sort({ currentExperience: -1 }).limit(100).toArray();
-
-    const data = JSON.parse(JSON.stringify(inner));
+    const leads = await getAllRank();
 
     return {
         props: {
-            leaderboards: data
+            leaderboards: JSON.parse(JSON.stringify(leads))
         }
     }
 }

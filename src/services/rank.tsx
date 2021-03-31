@@ -1,13 +1,18 @@
-import { PrismaClient } from ".prisma/client"
+import { PrismaClient } from ".prisma/client";
 
 const prisma = new PrismaClient();
 
-export const createRank = async (data) => {
-    console.log('DATA', data)
+export const createRank = async (data: any) => {
     return await prisma.rank.create({ data });
 }
 
-export const updateRank = async (userID, level, currentExperience, challengesCompleted, totalExperience) => {
+export const updateRank = async (
+    userID: number,
+    level: number,
+    currentExperience: number,
+    challengesCompleted: number,
+    totalExperience: number
+) => {
     return await prisma.rank.update({
         where: {
             id: userID
@@ -21,23 +26,14 @@ export const updateRank = async (userID, level, currentExperience, challengesCom
     });
 }
 
-export const getRankByid = async (data) => {
-    console.log('GET RANK', data)
-    return await prisma.rank.findFirst({ where: { userID: data } })
+export const getRankByid = async (id: number) => {
+    return await prisma.rank.findFirst({ where: { userID: id } })
 }
 
-// export const getAllRank = () => {
-//     return client.query(
-//         q.Map(
-//             // iterate each item in result
-//             q.Paginate(
-//                 // make paginatable
-//                 q.Match(
-//                     // query index
-//                     q.Index("get_all_rank") // specify source
-//                 )
-//             ),
-//             q.Lambda((x) => q.Get(x)) // lookup each result by its reference
-//         )
-//     );
-// }
+export const getAllRank = async () => {
+    return prisma.user.findMany({
+        include: {
+            rank: true
+        }
+    })
+}

@@ -7,8 +7,17 @@ const prisma = new PrismaClient();
 //     return client.query(q.Create(q.Collection('users'), { data }))
 // }
 
-//update
+export const isAdmin = (id: number) => {
+    return prisma.user.findFirst({
+        where: {
+            id: id,
+            admin: true
+        }
+    })
+}
 
+
+// UPDATE
 export const updateUser = (data: any) => {
     return prisma.user.update({
         where: {
@@ -20,27 +29,6 @@ export const updateUser = (data: any) => {
         }
     })
 }
-
-// //delete
-// export const deleteUser = (ref) => {
-//     return client.query(q.Delete(q.Ref(q.Collection('users'), ref)))
-// }
-
-// export const getAllUsers = () => {
-//     return client.query(
-//         q.Map(
-//             // iterate each item in result
-//             q.Paginate(
-//                 // make paginatable
-//                 q.Match(
-//                     // query index
-//                     q.Index("get_all_users") // specify source
-//                 )
-//             ),
-//             q.Lambda((x) => q.Get(x)) // lookup each result by its reference
-//         )
-//     );
-// }
 
 export const getUserById = (id: number) => {
     return prisma.user.findUnique({ where: { id: id } });

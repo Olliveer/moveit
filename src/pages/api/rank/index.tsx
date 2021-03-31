@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createRank, getRankByid, updateRank } from '../../../services/rank';
+import { createRank, getAllRank, getRankByid, updateRank } from '../../../services/rank';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -24,9 +24,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 res.status(201).json({ message: 'rank updated' });
                 break;
             case 'GET':
-                // const allUsers = await getAllRank();
+                const allUsers = await getAllRank();
 
-                // res.status(200).json(allUsers.data);
+                res.status(200).json(allUsers);
                 break;
             default:
                 res.status(200);
