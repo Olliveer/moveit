@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import styles from '../styles/components/All.module.css';
 
 interface UserProps {
+    createdAt: Date;
     _id: string;
     name: string;
     email: string;
@@ -31,21 +32,21 @@ export default function UsersList() {
                         <tr>
                             <th>Usuário</th>
                             <th>Email</th>
-                            <th>desafios</th>
+                            <th>data</th>
                         </tr>
                     </thead>
                     <tbody>
                         {usersList.map((user: UserProps, index: number) => (
                             <tr key={index}>
                                 <td className={styles.UserContainer}>
-                                    <img src={user.data.image || 'user-placeholder.png'} alt="User Image" />
+                                    <img src={user.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
-                                        <p> {user.data.name ?? user.data.email}</p>                                        
+                                        <p> {user.name ?? user.email}</p>                                        
                                     </div>
 
                                 </td>
-                                <td><span>{user.data.email}</span></td>
-                                <td><span>{user.data.createdAt}</span></td>
+                                <td><span>{user.email}</span></td>
+                                <td><span>{user.createdAt}</span></td>
                             </tr>
                         ))}
                     </tbody>

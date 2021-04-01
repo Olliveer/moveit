@@ -2,10 +2,15 @@ import { PrismaClient } from ".prisma/client"
 
 const prisma = new PrismaClient();
 
-// export const createUser = (data) => {
-//     console.log('Adataaaaaa', data);
-//     return client.query(q.Create(q.Collection('users'), { data }))
-// }
+export const createUser = (data: any) => {
+    return prisma.user.create({
+        data: {
+            name: data.name,
+            email: data.email,
+            admin: data.admin
+        }
+    });
+}
 
 export const isAdmin = (id: number) => {
     return prisma.user.findFirst({
@@ -16,8 +21,6 @@ export const isAdmin = (id: number) => {
     })
 }
 
-
-// UPDATE
 export const updateUser = (data: any) => {
     return prisma.user.update({
         where: {
@@ -28,6 +31,10 @@ export const updateUser = (data: any) => {
             email: data.email
         }
     })
+}
+
+export const getAllUsers = () => {
+    return prisma.user.findMany();
 }
 
 export const getUserById = (id: number) => {
@@ -49,28 +56,43 @@ export const getUserProfile = (id: number) => {
     })
 }
 
+export const getAllAdmin = () => {
+    return prisma.user.findMany({ where: { admin: true } })
+}
 
+export const getAdmin = (id: number) => {
+    return prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+}
 
-// export const getAllAdmin = () => {
-//     return client.query(
-//         q.Map(
-//             // iterate each item in result
-//             q.Paginate(
-//                 // make paginatable
-//                 q.Match(
-//                     // query index
-//                     q.Index("get_all_admin"), true // specify source
-//                 )
-//             ),
-//             q.Lambda('admin', q.Get(q.Var('admin'))) // lookup each result by its reference
-//         )
-//     );
-// }
+export const createAdmin = (data: any) => {
+    return prisma.user.create({
+        data: {
+            name: data.name,
+            email: data.email,
+            admin: data.admin
+        }
+    });
+}
 
-// export const createAdmin = (data) => {
-//     return client.query(q.Create(q.Collection('users'), { data }))
-// }
+export const updateAdmin = (id: number, name: string, email: string, admin: boolean) => {
+    return prisma.user.update({
+        where: {
+            id: id
+        },
+        data: {
+            name: name,
+            email: email,
+            admin: admin
+        }
+    })
+}
 
-
+export const deleteAdmin = (id: number) => {
+    return prisma.user.delete({ where: { id: id } })
+}
 
 

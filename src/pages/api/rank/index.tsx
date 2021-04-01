@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         switch (method) {
             case 'POST':
                 const rank = await getRankByid(req.body.userId);
-                console.log('REQ', req.body)
+                
                 if (!rank) {
                     await createRank(req.body);
                     return res.status(201).json({ ok: true })

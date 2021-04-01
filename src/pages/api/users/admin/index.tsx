@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createAdmin, getAllAdmin } from '../../../../services/users';
+import { createAdmin, getAllAdmin, updateAdmin } from '../../../../services/users';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { method } = req;
+
     switch (method) {
       case 'POST':
         const { name, email, admin, createdAt } = req.body;
@@ -13,10 +14,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           : res.status(201).json({ message: `User ${name} created` });
         break;
       case 'GET':
+        console.log('AQUI GET', req.body)
         const allAdmins = await getAllAdmin();
 
         res.status(200).json(allAdmins);
         break;
+      case 'PUT':
+        
       default:
         res.status(200);
     }

@@ -26,7 +26,6 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
   function back() {
     setEdit(false);
   }
-  console.log(props.user.admin)
 
   return (
     <div className={styles.Container}>
@@ -47,10 +46,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
                   onChange={event => setName(event.target.value)} />
 
                 <label htmlFor="email">E-mail</label>
-                <input
-                  id="email"
-                  value={email}
-                  onChange={event => setEmail(event.target.value)} />
+                <p>{email}</p>
 
                 <div className={styles.ButtonsContainer}>
                   <button type="submit">
@@ -81,7 +77,7 @@ export default function Profile(props: InferGetServerSidePropsType<typeof getSer
                 <h1>E-mail</h1>
                 <p>{email}</p>
                 <button onClick={() => setEdit(true)}>
-                  Editar
+                  Editar nome
                 </button>
               </div>
 
@@ -112,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const user = await getUserByEmail(session.user.email);
   const profile = await getUserProfile(user.id)
-  
+
   return {
     props: {
       user: JSON.parse(JSON.stringify(profile))

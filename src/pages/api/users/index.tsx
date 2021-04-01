@@ -7,12 +7,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     switch (method) {
       case 'POST':
         await createUser(req.body);
-        res.status(201).json({message: 'User created'});
+        res.status(201).json({ message: 'User created' });
         break;
       case 'GET':
         const allUsers = await getAllUsers();
 
-        res.status(200).json(allUsers.data);
+        res.status(200).json(allUsers);
         break;
       default:
         res.status(200);

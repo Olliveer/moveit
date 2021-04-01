@@ -57,6 +57,17 @@
     box-sizing: border-box;
 }
 
+.FormContainer :is(p){
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: start;
+    color: #666666;
+    padding-bottom: 32px;
+    text-align: start;
+    margin-top: 10px;
+}
+
 .FormContainer :is(img) {
     width: 150px;
     height: 150px;
