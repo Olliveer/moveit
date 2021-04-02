@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             res.json({ message: `Admin ${name} updated` })
             break;
         default:
-            break;
+            return res.status(405).end(`Method ${method} Not Allowed`);
     }
 
 

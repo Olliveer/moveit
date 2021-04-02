@@ -1,6 +1,4 @@
-import { PrismaClient } from ".prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/prismaDB';
 
 export const createRank = async (data: any) => {
     return await prisma.rank.create({ data });
@@ -26,14 +24,29 @@ export const updateRank = async (
     });
 }
 
+export const resetRank = () => {
+    return prisma.rank.updateMany({
+        data: {
+            level: 0,
+            currentExperience: 0,
+            challengesCompleted: 0,
+            totalExperience: 0
+        }
+    })
+}
+
 export const getRankByid = async (id: number) => {
     return await prisma.rank.findFirst({ where: { userID: id } })
 }
 
 export const getAllRank = async () => {
-    return prisma.user.findMany({
+    return await prisma.user.findMany({
         include: {
             rank: true
         }
     })
+}
+
+export const countRank = async () => {
+    return await prisma.rank.count();
 }

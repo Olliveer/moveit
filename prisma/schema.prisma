@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
@@ -71,10 +70,19 @@ model Rank {
   id                  Int      @id @default(autoincrement())
   userID              Int?
   user                User?    @relation(fields: [userID], references: [id])
-  level               Int
-  currentExperience   Int
-  challengesCompleted Int
-  totalExperience     Int
+  level               Int      @default(0)
+  currentExperience   Int      @default(0)
+  challengesCompleted Int      @default(0)
+  totalExperience     Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Challenges {
+  id          Int    @id @default(autoincrement())
+  type        String
+  description String
+  amount      Int
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

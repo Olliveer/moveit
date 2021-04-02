@@ -30,8 +30,6 @@ export default function Users() {
     checkedA: false,
     checkedB: true,
   });
-
-  console.log(admin.checkedB)
   
   const { data: listAdm, mutate } = useSWR('api/users/admin');
 

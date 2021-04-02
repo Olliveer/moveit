@@ -1,11 +1,10 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import useSWR from "swr";
 import { Sidebar } from "../components/Sidebar";
 import { getAllRank } from "../services/rank";
 import styles from '../styles/pages/leaderbords.module.css';
 
 interface UserProps {
-    _id: string;
+    id: string;
     name: string;
     email: string;
     image: string;
@@ -35,7 +34,7 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
                     </thead>
                     <tbody>
                         {leaderboards.map((user: UserProps, index: number) => (
-                            <tr key={user._id}>
+                            <tr key={user.id}>
                                 <td>{index + 1}</td>
                                 <td className={styles.UserContainer}>
                                     <img src={user.image || 'user-placeholder.png'} alt="User Image" />

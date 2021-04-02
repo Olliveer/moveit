@@ -19,7 +19,7 @@ export default function DashCards({ totalUsers, totalRank, totalChallenges, tota
     })
       .then((willDelete) => {
         if (willDelete) {
-          axios.put('api/rank/rank')
+          axios.put('api/rank')
             .then(res => showToast({ type: 'default', message: res.data.message }))
             .catch(err => showToast({ type: 'error', message: err.message }))
             .finally(() => router.push('/beta'))
@@ -52,7 +52,7 @@ export default function DashCards({ totalUsers, totalRank, totalChallenges, tota
       </div>
       <div>
         <header>
-          <h1>Exercícios</h1>
+          <h1>Desafios</h1>
           <span>{totalChallenges}</span>
         </header>
         <footer>

@@ -1,6 +1,4 @@
-import { PrismaClient } from ".prisma/client"
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/prismaDB';
 
 export const createUser = (data: any) => {
     return prisma.user.create({
@@ -12,10 +10,10 @@ export const createUser = (data: any) => {
     });
 }
 
-export const isAdmin = (id: number) => {
+export const isAdmin = (email: string) => {
     return prisma.user.findFirst({
         where: {
-            id: id,
+            email: email,
             admin: true
         }
     })
@@ -93,6 +91,18 @@ export const updateAdmin = (id: number, name: string, email: string, admin: bool
 
 export const deleteAdmin = (id: number) => {
     return prisma.user.delete({ where: { id: id } })
+}
+
+export const countUsers = () => {
+    return prisma.user.count();
+}
+
+export const countAdmin = () => {
+    return prisma.user.count({
+        where: {
+            admin: true
+        }
+    })
 }
 
 

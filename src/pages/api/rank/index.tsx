@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createRank, getAllRank, getRankByid, updateRank } from '../../../services/rank';
+import { createRank, getAllRank, getRankByid, resetRank, updateRank } from '../../../services/rank';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         switch (method) {
             case 'POST':
                 const rank = await getRankByid(req.body.userId);
-                
+
                 if (!rank) {
                     await createRank(req.body);
                     return res.status(201).json({ ok: true })
@@ -24,9 +24,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 res.status(201).json({ message: 'rank updated' });
                 break;
             case 'GET':
-                const allUsers = await getAllRank();
+                await getAllRank();
 
-                res.status(200).json(allUsers);
+                res.status(200);
+                break;
+            case 'PUT':
+                await resetRank();
+                res.status(200);
                 break;
             default:
                 res.status(200);

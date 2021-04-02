@@ -14,7 +14,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           : res.status(201).json({ message: `User ${name} created` });
         break;
       case 'GET':
-        console.log('AQUI GET', req.body)
         const allAdmins = await getAllAdmin();
 
         res.status(200).json(allAdmins);
@@ -22,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       case 'PUT':
         
       default:
-        res.status(200);
+        return res.status(405).end(`Method ${method} Not Allowed`);
     }
 
   } catch (error) {

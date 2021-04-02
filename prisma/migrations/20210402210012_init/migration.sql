@@ -50,13 +50,23 @@ CREATE TABLE "verification_requests" (
 CREATE TABLE "Rank" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "userID" INTEGER,
-    "level" INTEGER NOT NULL,
-    "currentExperience" INTEGER NOT NULL,
-    "challengesCompleted" INTEGER NOT NULL,
-    "totalExperience" INTEGER NOT NULL,
+    "level" INTEGER NOT NULL DEFAULT 0,
+    "currentExperience" INTEGER NOT NULL DEFAULT 0,
+    "challengesCompleted" INTEGER NOT NULL DEFAULT 0,
+    "totalExperience" INTEGER NOT NULL DEFAULT 0,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     FOREIGN KEY ("userID") REFERENCES "users" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Challenges" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "type" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateIndex

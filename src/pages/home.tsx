@@ -1,9 +1,6 @@
-import { PrismaClient } from '.prisma/client';
-import axios from 'axios';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getSession } from 'next-auth/client';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 import { ChallangeBox } from '../components/ChallengeBox';
 import { CompleteChallanges } from '../components/CompleteChallanges';
 import { Countdown } from '../components/Countdown';
@@ -12,11 +9,9 @@ import { Profile } from '../components/Profile';
 import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
-import { createRank, getRankByid } from '../services/rank';
+import { getRankByid } from '../services/rank';
 import { getUserByEmail } from '../services/users';
 import styles from '../styles/pages/Home.module.css';
-import { client, q } from '../util/faunaDb';
-import { connectToDatabase } from '../util/mongodb';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
