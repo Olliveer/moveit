@@ -1,7 +1,7 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetStaticPropsType } from "next";
+import prisma from '../../lib/prismaDB';
 import { Sidebar } from "../components/Sidebar";
 import styles from '../styles/pages/leaderbords.module.css';
-import prisma from '../../lib/prismaDB';
 
 interface UserProps {
     id: string;
@@ -55,7 +55,7 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
     )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetServerSideProps = async () => {
 
     const leads = await prisma.user.findMany({
         include: {
