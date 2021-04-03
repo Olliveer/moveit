@@ -1,3 +1,4 @@
+import { CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 import React, { FormEvent, useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
@@ -28,7 +29,11 @@ export default function Challenges() {
   const { data: listChallenges, mutate } = useSWR('api/challenges');
 
   if (!listChallenges) {
-    return <div>Loading....</div>
+    return (
+      <div className={styles.Load}>
+          <CircularProgress />
+      </div>
+  );
   }
 
   function handleSubmit(event: FormEvent) {

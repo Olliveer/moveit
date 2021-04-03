@@ -1,4 +1,4 @@
-.Container{
+.Container {
     display: flex;
     flex-direction: column;
     max-width: 1200px;
@@ -49,30 +49,30 @@
     padding: 20px;
 }
 
-.TableContainer table> tbody :is(button) {
+.TableContainer table>tbody :is(button) {
     width: 50px;
     height: 50px;
     border-radius: 5px;
     border: none;
-    transition:  background 0.5s;
+    transition: background 0.5s;
 }
 
-.TableContainer table> tbody :is(button):first-child{
+.TableContainer table>tbody :is(button):first-child {
     background: var(--red);
     color: var(--white);
     margin-right: 5px;
 }
 
-.TableContainer table> tbody :is(button):first-child:hover{
+.TableContainer table>tbody :is(button):first-child:hover {
     background: var(--blue);
 }
 
-.TableContainer table> tbody :is(button):last-child{
+.TableContainer table>tbody :is(button):last-child {
     background: var(--blue);
     color: var(--white)
 }
 
-.TableContainer table> tbody :is(button):last-child:hover{
+.TableContainer table>tbody :is(button):last-child:hover {
     background: var(--green);
     color: var(--white)
 }
@@ -105,18 +105,18 @@
 
 .TableContainer tbody :is(span) {
     color: var(--blue);
-    margin-right: 5px; 
+    margin-right: 5px;
 }
 
 .TableContainer tbody :is(td) {
     color: #666666;
     font-weight: 500;
     font-size: 1rem;
-    line-height: 19px;  
+    line-height: 19px;
 }
 
-.tdDescription {    
-   max-width: 200px;
+.tdDescription {
+    max-width: 200px;
 }
 
 .ContentContainer {
@@ -155,7 +155,7 @@
     box-sizing: border-box;
 }
 
-.ContentContainer :is(textarea){
+.ContentContainer :is(textarea) {
     height: 50px;
     padding: 10px;
     font-size: 1rem;
@@ -203,13 +203,13 @@
     border-radius: 5px;
 }
 
-.UserContainer  {
+.UserContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.UserContainer :is(div){
+.UserContainer :is(div) {
     margin-top: 24px;
     margin-left: 16px;
 }
@@ -218,16 +218,24 @@
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 24px;
-    color: #2E384D;   
+    color: #2E384D;
 }
+
 .UserContainer :is(p):last-child {
     font-size: 1rem;
     font-weight: 400;
     line-height: 19px;
-    color: #666666;   
+    color: #666666;
 }
 
-.UserContainer p > :is(img){
+.UserContainer p> :is(img) {
     width: 14px;
     height: 16px;
+}
+
+.Load {
+    display: flex;
+    margin: 250px auto;
+    align-items: center;
+    justify-content: center;
 }

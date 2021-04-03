@@ -64,9 +64,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       userID: Number(user.id)
     }
   });
-
+  
   const challangesData = await prisma.challenges.findMany();
-  console.log(challangesData);
 
   return {
     props: {
