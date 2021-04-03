@@ -1,6 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Sidebar } from "../components/Sidebar";
 import styles from '../styles/pages/leaderbords.module.css';
+import prisma from '../../lib/prismaDB';
 
 interface UserProps {
     id: string;
