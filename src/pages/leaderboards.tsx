@@ -1,6 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Sidebar } from "../components/Sidebar";
-import { getAllRank } from "../services/rank";
 import styles from '../styles/pages/leaderbords.module.css';
 
 interface UserProps {
