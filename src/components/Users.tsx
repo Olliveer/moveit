@@ -99,7 +99,7 @@ export default function Users() {
       .then(res => {
         setName(res.data.name)
         setEmail(res.data.email)
-        setAdmin({checkedB: res.data.admin})
+        setAdmin(res.data.admin)
         setUpdateId(res.data.id)
       })
       .finally(() => updateAdmin());

@@ -1,10 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider          = "postgres"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+// url      = "file:./dev.db"
 generator client {
   provider = "prisma-client-js"
 }
@@ -79,10 +81,10 @@ model Rank {
 }
 
 model Challenges {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   type        String
   description String
   amount      Int
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
