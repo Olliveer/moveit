@@ -1,11 +1,11 @@
-import axios from 'axios'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession } from 'next-auth/client'
-import { FormEvent, useState } from 'react'
-import { Sidebar } from '../components/Sidebar'
-import ToastAnimated, { showToast } from '../components/Toast'
-import styles from '../styles/pages/Profile.module.css'
-
+import axios from 'axios';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getSession } from 'next-auth/client';
+import { FormEvent, useState } from 'react';
+import { Sidebar } from '../components/Sidebar';
+import ToastAnimated, { showToast } from '../components/Toast';
+import styles from '../styles/pages/Profile.module.css';
+import prisma from '../../lib/prismaDB';
 
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [id] = useState(props.user.id);

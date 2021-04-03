@@ -8,6 +8,7 @@ import { Sidebar } from '../../components/Sidebar';
 import Users from '../../components/Users';
 import UsersList from '../../components/UsersList';
 import styles from '../../styles/pages/Index.module.css';
+import prisma from '../../../lib/prismaDB';
 
 
 export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
