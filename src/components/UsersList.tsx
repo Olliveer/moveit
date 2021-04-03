@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { CircularProgress } from '@material-ui/core';
+import React from 'react';
 import useSWR from 'swr';
 import styles from '../styles/components/All.module.css';
 
@@ -17,10 +18,14 @@ interface UserProps {
 }
 
 export default function UsersList() {
-    const {data: usersList, mutate} = useSWR('api/users');
+    const { data: usersList, mutate } = useSWR('api/users');
 
     if (!usersList) {
-        return <h1>Loading</h1>;
+        return (
+            <div className={styles.Load}>
+                <CircularProgress />
+            </div>
+        );
     }
 
     return (
@@ -41,13 +46,14 @@ export default function UsersList() {
                                 <td className={styles.UserContainer}>
                                     <img src={user.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
-                                        <p> {user.name ?? user.email}</p>                                        
+                                        <p> {user.name ?? user.email}</p>
                                     </div>
 
                                 </td>
                                 <td><span>{user.email}</span></td>
                                 <td><span>{user.createdAt}</span></td>
                             </tr>
+
                         ))}
                     </tbody>
                 </table>

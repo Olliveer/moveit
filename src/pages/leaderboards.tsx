@@ -8,7 +8,7 @@ interface UserProps {
     name: string;
     email: string;
     image: string;
-    rank: {
+    rank?: {
         level: number;
         challengesCompleted: number;
         currentExperience: number;
@@ -40,12 +40,12 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
                                     <img src={user.image || 'user-placeholder.png'} alt="User Image" />
                                     <div>
                                         <p> {user.name ?? user.email}</p>
-                                        <p> <img src="/icons/level.svg" alt="Level" /> Level {user.rank.level}</p>
+                                        <p> <img src="/icons/level.svg" alt="Level" /> Level {user.rank?.level ?? 0}</p>
                                     </div>
 
                                 </td>
-                                <td><span>{user.rank.challengesCompleted}</span> completados</td>
-                                <td><span>{user.rank.totalExperience}</span> xp</td>
+                                <td><span>{user.rank?.challengesCompleted ?? 0}</span> completados</td>
+                                <td><span>{user.rank?.totalExperience ?? 0}</span> xp</td>
                             </tr>
                         ))}
                     </tbody>

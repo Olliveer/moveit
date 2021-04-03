@@ -48,7 +48,9 @@ export const getChallangeByDescription = (data: string) => {
 }
 
 export const getAllchallenges = () => {
-    return prisma.challenges.findMany();
+    return prisma.challenges.findMany({
+        take: 4
+    });
 }
 
 export const countChallenges = () => {

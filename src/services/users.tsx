@@ -32,7 +32,7 @@ export const updateUser = (data: any) => {
 }
 
 export const getAllUsers = () => {
-    return prisma.user.findMany();
+    return prisma.user.findMany({take: 4});
 }
 
 export const getUserById = (id: number) => {

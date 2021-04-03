@@ -102,3 +102,8 @@
     font-size: 1rem;
     line-height: 19px;
 }
+
+.Load {
+    display: flex;
+    margin: auto auto;
+}

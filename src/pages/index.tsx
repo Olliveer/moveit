@@ -1,24 +1,36 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
-import { AiFillFacebook, AiFillGithub, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
+import { FormEvent, useEffect, useState } from 'react';
+import { AiFillFacebook, AiFillTwitterCircle, AiOutlineArrowRight } from "react-icons/ai";
+import ToastAnimated, { showToast } from '../components/Toast';
 import styles from '../styles/pages/Index.module.css';
-
 
 
 export default function Login(props) {
   const router = useRouter();
   const [session, loading] = useSession();
   const [email, setEmail] = useState('');
+  const [loginError, setLoginError] = useState('')
+
+  console.log(router.query.error)
 
   function handleLogin(event: FormEvent) {
     event.preventDefault();
     signIn('email', { email });
   }
 
+  useEffect(() => {
+    if (router.query.error) {
+      setLoginError(String(router.query.error))
+    }
+  }, [router])
+  
+  if(loginError) showToast({ type: 'error', message: loginError });
+
   return (
     <div className={styles.container}>
+      <ToastAnimated />
       <section>
         <div>
           <img src="logo-landing.svg" alt="Logo Move it" />

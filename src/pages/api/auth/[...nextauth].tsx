@@ -56,7 +56,6 @@ const options = {
     // database: process.env.MONGODB_URI,
     pages: {
         error: '/index',
-        newUser: null,
     }
 
 }

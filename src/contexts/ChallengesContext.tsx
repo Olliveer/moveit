@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { GetServerSideProps } from 'next';
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import challenges from '../../challenges.json';
+import useSWR from 'swr';
+// import challenges from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
-import { connectToDatabase } from '../util/mongodb';
 
 interface Challenge {
     type: string;
@@ -60,7 +59,12 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
     const [totalExperience, setTotalExperience] = useState(rest.rank.totalExperience ?? 0);
     const [id] = useState(rest.user.id);
+    const {data: challenges} = useSWR('api/challenges');
 
+    if(!challenges){
+        return <h1>Loading...</h1>
+    }
+    
     useEffect(() => {
         Notification.requestPermission();
     }, [])

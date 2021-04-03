@@ -217,3 +217,9 @@
     background: #4953B8;
     border-radius: 5px;
 }
+
+
+.Load {
+    display: flex;
+    margin: auto auto;
+}

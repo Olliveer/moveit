@@ -4,8 +4,7 @@ import {
     deleteChallenge,
     getAllchallenges,
     getChallangeByDescription,
-    getChallengeById,
-    updateChallenge
+    getChallengeById
 } from "../../../services/challenges";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

@@ -1,3 +1,4 @@
+require('events').EventEmitter.defaultMaxListeners = 15;
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/client'
 import React, { useState } from 'react'
@@ -10,7 +11,6 @@ import { countChallenges } from '../../services/challenges'
 import { countRank } from '../../services/rank'
 import { countAdmin, countUsers, isAdmin } from '../../services/users'
 import styles from '../../styles/pages/Index.module.css'
-import { connectToDatabase } from '../../util/mongodb'
 
 
 export default function Dashboard(props: InferGetServerSidePropsType<typeof getServerSideProps>) {

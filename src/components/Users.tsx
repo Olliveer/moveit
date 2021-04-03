@@ -1,4 +1,4 @@
-import { Switch } from '@material-ui/core';
+import { CircularProgress, Switch } from '@material-ui/core';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { FormEvent, useState } from 'react';
@@ -34,7 +34,11 @@ export default function Users() {
   const { data: listAdm, mutate } = useSWR('api/users/admin');
 
   if (!listAdm) {
-    return <div>Loding...</div>
+    return (
+      <div className={styles.Load}>
+          <CircularProgress />
+      </div>
+  );
   }
 
   const deleteUser = async (id: number) => {
