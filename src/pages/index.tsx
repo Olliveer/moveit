@@ -13,8 +13,6 @@ export default function Login(props) {
   const [email, setEmail] = useState('');
   const [loginError, setLoginError] = useState('')
 
-  console.log(router.query.error)
-
   function handleLogin(event: FormEvent) {
     event.preventDefault();
     signIn('email', { email });
