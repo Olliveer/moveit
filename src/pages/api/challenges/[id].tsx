@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getChallengeById, updateChallenge } from "../../../services/challenges";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;

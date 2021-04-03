@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createAdmin, getAllAdmin, updateAdmin } from '../../../../services/users';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
