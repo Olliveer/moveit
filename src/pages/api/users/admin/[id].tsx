@@ -1,22 +1,34 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { deleteAdmin, getAdmin, updateAdmin } from "../../../../services/users";
+import prisma from '../../../../../lib/prismaDB';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
     switch (method) {
         case 'DELETE':
-            await deleteAdmin(Number(req.query.id));
+            await prisma.user.delete({ where: { id: Number(req.query.id) } });
             res.json({ message: 'User deleted 🗑️' })
             break;
         case 'GET':
-            const admin = await getAdmin(Number(req.query.id))
+            const admin = await prisma.user.findUnique({
+                where: {
+                    id: Number(req.query.id)
+                }
+            })
             res.json(admin)
             break;
         case 'PUT':
             const id = req.query.id;
             const { name, email, isAdmin } = req.body;
-            await updateAdmin(Number(id), name, email, isAdmin);
-
+            await prisma.user.update({
+                where: {
+                    id: Number(id)
+                },
+                data: {
+                    name: name,
+                    email: email,
+                    admin: isAdmin
+                }
+            })
             res.json({ message: `Admin ${name} updated` })
             break;
         default:

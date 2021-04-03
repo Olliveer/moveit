@@ -9,9 +9,8 @@ import { Profile } from '../components/Profile';
 import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
-import { getRankByid } from '../services/rank';
-import { getUserByEmail } from '../services/users';
 import styles from '../styles/pages/Home.module.css';
+import prisma from '../../lib/prismaDB';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -22,6 +21,7 @@ export default function Home(props: InferGetServerSidePropsType<typeof getServer
       session={props.session}
       user={props.user}
       rank={props.rank}
+      challenges={props.challangesData}
     >
       <Sidebar admin={props.user.admin} />
       <div className={styles.container}>
@@ -58,8 +58,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: {} }
   }
 
-  const user = await getUserByEmail(session.user.email);
-  const rank = await getRankByid(Number(user.id));
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+  const rank = await prisma.rank.findFirst({
+    where: {
+      userID: Number(user.id)
+    }
+  });
+
+  const challangesData = await prisma.challenges.findMany();
+  console.log(challangesData);
 
   return {
     props: {
@@ -69,7 +76,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       session: session.user,
       user: JSON.parse(JSON.stringify(user)) ?? {},
       rank: JSON.parse(JSON.stringify(rank)) ?? {},
-      admin: user.admin ?? null
+      admin: user.admin ?? null,
+      challangesData: JSON.parse(JSON.stringify(challangesData))
     }
   }
 }

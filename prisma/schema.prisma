@@ -1,10 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 datasource db {
-  provider          = "postgres"
+  provider          = "postgresql"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
+
+// url               = env("DATABASE_URL")
+// shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 
 // url      = "file:./dev.db"
 generator client {

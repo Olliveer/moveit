@@ -5,13 +5,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
     switch (method) {
         case 'DELETE':
-            res.json({ message: 'User deleted 🗑️' })
             break;
         case 'GET':
-            const challengData = await getChallengeById(Number(req.query.id));
+            const challengData = await prisma.challenges.findUnique({
+                where: {
+                    id: Number(req.query.id)
+                }
+            });
 
             if (!challengData) {
-                return res.status(400).json({ message: 'Opss... challange não encontrada 😅' });
+                return res.status(400).json({ message: 'Opss... challenge não encontrada 😅' });
             }
 
             res.json(challengData);
@@ -19,8 +22,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         case 'PUT':
             const id = req.query.id;
             const { type, description, amount } = req.body;
-            
-            await updateChallenge(Number(id),  type, description, Number(amount));
+
+            await prisma.challenges.update({
+                where: {
+                    id: Number(id)
+                },
+                data: {
+                    type: type,
+                    description: description,
+                    amount: Number(amount)
+                }
+            })
 
             res.json({ message: 'Desafio atualizado 😎' })
             break;

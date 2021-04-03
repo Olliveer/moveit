@@ -19,7 +19,6 @@
     margin-top: 10px;
     width: 100%;
     border-collapse: collapse;
-    
     overflow-y: hidden;
 }
 
@@ -50,30 +49,30 @@
     color: #666666;
 }
 
-.TableContainer table> tbody :is(button) {
+.TableContainer table>tbody :is(button) {
     width: 50px;
     height: 50px;
     border-radius: 5px;
     border: none;
-    transition:  background 0.5s;
+    transition: background 0.5s;
 }
 
-.TableContainer table> tbody :is(button):first-child{
+.TableContainer table>tbody :is(button):first-child {
     background: var(--red);
     color: var(--white);
     margin-right: 5px;
 }
 
-.TableContainer table> tbody :is(button):first-child:hover{
+.TableContainer table>tbody :is(button):first-child:hover {
     background: var(--blue);
 }
 
-.TableContainer table> tbody :is(button):last-child{
+.TableContainer table>tbody :is(button):last-child {
     background: var(--blue);
     color: var(--white)
 }
 
-.TableContainer table> tbody :is(button):last-child:hover{
+.TableContainer table>tbody :is(button):last-child:hover {
     background: var(--green);
     color: var(--white)
 }
@@ -218,8 +217,9 @@
     border-radius: 5px;
 }
 
-
 .Load {
     display: flex;
-    margin: auto auto;
+    margin: 250px auto;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
-// import challenges from '../../challenges.json';
+import challenges from '../../activities-example.json';
 import { LevelUpModal } from '../components/LevelUpModal';
 
 interface Challenge {
@@ -46,6 +46,7 @@ interface ChallengesProviderProps {
     session: User;
     user: User;
     rank: UserRank;
+    challenges: any;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
@@ -59,8 +60,8 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
     const [totalExperience, setTotalExperience] = useState(rest.rank.totalExperience ?? 0);
     const [id] = useState(rest.user.id);
-    const {data: challenges} = useSWR('api/challenges');
-
+    const [challenges] = useState(rest.challenges);
+    console.log('context',challenges)
     if(!challenges){
         return <h1>Loading...</h1>
     }
@@ -87,6 +88,8 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     function startNewChallenge() {
         const randomChallengeIndex = Math.floor(Math.random() * challenges.length);
         const challenge = challenges[randomChallengeIndex];
+
+        console.log('chaaleng', challenge);
 
         setActiveChallenge(challenge);
 

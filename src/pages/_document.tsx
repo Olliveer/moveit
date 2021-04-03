@@ -13,12 +13,6 @@ export default class MyDocument extends Document {
                     <meta name="msapplication-TileColor" content="#da532c" />
                     <meta name="theme-color" content="#ffffff" />
 
-                    <meta property="twitter:card" content="summary_large_image" />
-                    <meta property="twitter:url" content="https://metatags.io/" />
-                    <meta property="twitter:title" content="Move.it | Level Up" />
-                    <meta property="twitter:description" content="Técnica Pomodoro feito paraotimizar o tempo de estudos e tarefas geralmente é voltada para pessoas procrastinadoras, ou seja, que têm tendência a adiar suas atividades. " />
-                    <meta property="twitter:image" content="https://i.imgur.com/IZSZ5xr.png"></meta>
-
                     <link rel="preconnect" href="https://fonts.gstatic.com" />
                     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600&display=swap" rel="stylesheet" />
                 </Head>

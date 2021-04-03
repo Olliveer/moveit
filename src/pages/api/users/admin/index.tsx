@@ -7,19 +7,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     switch (method) {
       case 'POST':
-        const { name, email, admin, createdAt } = req.body;
-        await createAdmin({ name, email, admin, createdAt });
+        const { name, email, admin } = req.body;
+        await prisma.user.create({
+          data: { name, email, admin }
+        });
+
         (admin === true)
           ? res.status(201).json({ message: `Admin ${name} created` })
           : res.status(201).json({ message: `User ${name} created` });
         break;
       case 'GET':
-        const allAdmins = await getAllAdmin();
-
-        res.status(200).json(allAdmins);
+        const admins = await prisma.user.findMany({ where: { admin: true } });
+        
+        res.status(200).json(admins);
         break;
       case 'PUT':
-        
+
       default:
         return res.status(405).end(`Method ${method} Not Allowed`);
     }

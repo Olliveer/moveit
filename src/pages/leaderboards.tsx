@@ -57,7 +57,11 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
 
 export const getStaticProps: GetStaticProps = async () => {
 
-    const leads = await getAllRank();
+    const leads = await prisma.user.findMany({
+        include: {
+            rank: true
+        }
+    });
 
     return {
         props: {

@@ -4,9 +4,8 @@ import { getSession } from 'next-auth/client'
 import { FormEvent, useState } from 'react'
 import { Sidebar } from '../components/Sidebar'
 import ToastAnimated, { showToast } from '../components/Toast'
-import { getUserByEmail, getUserProfile, isAdmin } from '../services/users'
+import styles from '../styles/pages/Profile.module.css'
 
-import styles from '../styles/pages/Profile.module.css';
 
 export default function Profile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [id] = useState(props.user.id);
@@ -106,8 +105,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return { props: {} }
   }
 
-  const user = await getUserByEmail(session.user.email);
-  const profile = await getUserProfile(user.id)
+  const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+  const profile = await prisma.user.findUnique({
+    where: {
+      id: user.id
+    },
+    include: {
+      rank: true
+    }
+  })
 
   return {
     props: {

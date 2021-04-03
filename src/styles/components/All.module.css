@@ -105,5 +105,7 @@
 
 .Load {
     display: flex;
-    margin: auto auto;
+    margin: 250px auto;
+    align-items: center;
+    justify-content: center;
 }
