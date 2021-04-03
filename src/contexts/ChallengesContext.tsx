@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import useSWR from 'swr';
-import challenges from '../../activities-example.json';
 import { LevelUpModal } from '../components/LevelUpModal';
 
 interface Challenge {
@@ -61,10 +59,6 @@ export function ChallengeProvider({ children, ...rest }: ChallengesProviderProps
     const [totalExperience, setTotalExperience] = useState(rest.rank.totalExperience ?? 0);
     const [id] = useState(rest.user.id);
     const [challenges] = useState(rest.challenges);
-    console.log('context',challenges)
-    if(!challenges){
-        return <h1>Loading...</h1>
-    }
     
     useEffect(() => {
         Notification.requestPermission();

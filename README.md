@@ -92,7 +92,7 @@ https://github.com/olliveer/moveit
 - [Typescript](https://www.typescriptlang.org/)
 - [Next.JS](https://nextjs.org/)
 - [Next-auth](https://next-auth.js.org/)
-- [mongoDB](https://www.mongodb.com/)---
+- [prismaDB+Postgresql](https://www.prisma.io/)---
 
 
 ## 📝 License
