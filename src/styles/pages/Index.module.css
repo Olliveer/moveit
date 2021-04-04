@@ -3,6 +3,9 @@
     height: 100vh;
     background: rgba(89, 101, 224, 1);
     flex-direction: column;
+    background-image: url('/logo-landing.svg');
+    background-repeat: no-repeat;
+    background-position: left;
 }
 
 .container section {
@@ -14,7 +17,7 @@
 }
 
 .buttonContainer {
-    height: 100%;
+    height: 100vh;
     border-radius: 5px;
     padding: 1.5rem 2rem;
     display: flex;
@@ -48,10 +51,9 @@
     margin-bottom: 40px;
 }
 
-.buttonContainer img {
-    place-self: center center;
+/* .buttonContainer img {
     margin-top: 100px;
-}
+} */
 
 .container input {
     color: white;
@@ -138,32 +140,29 @@
 .signedButtons button:last-child:hover{
     background: #4953B8;
 }
-/* Keyword values */
 
-/* place-self: auto center;
-place-self: normal start; */
+@media(max-width:768px) {
+    .container section {
+        height: 100vh;
+        grid-template-columns: auto;
+        gap: 4rem;
+        padding-bottom: 4rem;
+        overflow: hidden;
+    }
 
-/* Positional alignment */
+    .buttonContainer img {
+        width: 100%;
+    }
 
-/* place-self: center normal;
-place-self: start auto;
-place-self: end normal;
-place-self: self-start auto;
-place-self: self-end normal;
-place-self: flex-start auto;
-place-self: flex-end normal;
-place-self: left auto;
-place-self: right normal; */
+    .container input {
+        width: 100%;
+    }
 
-/* Baseline alignment */
+    .container form>button {
+        border-radius: 50%;
+    }
 
-/* place-self: baseline normal;
-place-self: first baseline auto;
-place-self: last baseline normal;
-place-self: stretch auto; */
-
-/* Global values */
-
-/* place-self: inherit;
-place-self: initial;
-place-self: unset; */
+    .container form>button:hover {
+        background: var(--green);
+    }
+}

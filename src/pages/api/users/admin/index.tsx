@@ -18,11 +18,35 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       case 'GET':
         const admins = await prisma.user.findMany({ where: { admin: true } });
-        
+
         res.status(200).json(admins);
         break;
       case 'PUT':
+        const id = req.body;
+        const user = await prisma.user.findUnique({ where: { id: id.id } });
 
+        if (user.admin) {
+          await prisma.user.update({
+            where: {
+              id: id.id
+            },
+            data: {
+              admin: false
+            }
+          })
+          return res.status(200).json({ message: `Usuário ${user.name} agora é admin 😎` });
+        }
+        await prisma.user.update({
+          where: {
+            id: user.id
+          },
+          data: {
+            admin: true
+          }
+        });
+
+        res.status(200).json({ message: `Usuário ${user.name} não é mais admin 😎` });
+        break;
       default:
         return res.status(405).end(`Method ${method} Not Allowed`);
     }

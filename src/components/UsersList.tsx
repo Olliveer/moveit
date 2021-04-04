@@ -1,12 +1,16 @@
 import { CircularProgress } from '@material-ui/core';
+import axios from 'axios';
 import React from 'react';
+import swal from 'sweetalert';
 import useSWR from 'swr';
 import styles from '../styles/components/All.module.css';
+import ToastAnimated, { showToast } from './Toast';
 
 interface UserProps {
     createdAt: Date;
-    _id: string;
+    id: number;
     name: string;
+    admin: boolean;
     email: string;
     image: string;
     position: {
@@ -28,8 +32,49 @@ export default function UsersList() {
         );
     }
 
+    function admin(id: number) {
+        swal({
+            title: "Tem certeza que deseja promover o usuario pra admin?",
+            icon: "warning",
+            buttons: ['Não', 'Sim'],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.put('api/users/admin', { id })
+                        .then(res => showToast({ type: 'success', message: res.data.message }))
+                        .finally(() => mutate());
+                    swal("Poof! Agora o usuário é admin!", {
+                        icon: "success",
+                    });
+                }
+            })
+    }
+
+    function deleteUser(id: number) {
+        swal({
+            title: "Tem certeza que deseja excluír?",
+            text: "Depois de excluído, você não será capaz de recuperar!",
+            icon: "warning",
+            buttons: ['Não', 'Sim'],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.delete('api/users/admin/' + id)
+                        .then(res => showToast({ type: 'success', message: res.data.message }))
+                        .finally(() => mutate());
+                    console.log('fel', id, admin)
+                    swal("Poof! O usuário foi deletado!", {
+                        icon: "success",
+                    });
+                }
+            })
+    }
+
     return (
         <div className={styles.Container}>
+            <ToastAnimated />
             <h1>Usuários</h1>
             <div className={styles.TableContainer}>
                 <table>
@@ -51,7 +96,16 @@ export default function UsersList() {
 
                                 </td>
                                 <td><span>{user.email}</span></td>
-                                <td><span>{user.createdAt}</span></td>
+                                <td>
+                                    <div className={styles.ButtonsContainer}>
+                                        <button onClick={() => deleteUser(user.id)}>Excluir</button>
+                                        {user.admin ? (
+                                            <button onClick={() => admin(user.id)}>user?</button>
+                                        ) : (
+                                            <button onClick={() => admin(user.id)}>admin?</button>
+                                        )}
+                                    </div>
+                                </td>
                             </tr>
 
                         ))}

@@ -24,14 +24,16 @@ export default function Login(props) {
     }
   }, [router])
   
-  if(loginError) showToast({ type: 'error', message: loginError });
+  if(loginError) {
+   return showToast({ type: 'error', message: loginError })
+  };
 
   return (
     <div className={styles.container}>
       <ToastAnimated />
       <section>
         <div>
-          <img src="logo-landing.svg" alt="Logo Move it" />
+          {/* <img src="logo-landing.svg" alt="Logo Move it" /> */}
         </div>
 
         {!session && (
@@ -42,16 +44,12 @@ export default function Login(props) {
 
             <div>
               <p>
-                Faça login com seu Facebook ou twitter
+                Faça login com seu Facebook ou Twitter
                 para começar
               </p>
               <button onClick={() => signIn('facebook')}>
                 <AiFillFacebook size={40} color="#FFF" />
               </button>
-
-              {/* <button onClick={() => signIn('github')}>
-                <AiFillGithub size={40} color="#FFF" />
-              </button> */}
 
               <button onClick={() => signIn('twitter')}>
                 <AiFillTwitterCircle size={40} color="#FFF" />

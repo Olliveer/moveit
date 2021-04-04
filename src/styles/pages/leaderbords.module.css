@@ -35,8 +35,7 @@
     line-height: 17px;
     text-transform: uppercase;
     color: #666666;
-    opacity: 0.5;
-      
+    opacity: 0.5;      
 }
 
 .TableContainer tr> :is(td):first-child {
@@ -104,4 +103,24 @@
     font-weight: 500;
     font-size: 1rem;
     line-height: 19px;
+}
+
+@media(max-width:768px) {
+    .TableContainer table  {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .NoDisplay {
+        display: none;
+    }
+
+    .UserContainer :is(p):first-child {
+        font-size: 0.825rem;
+    }
+
+    .Container :is(h1) {
+        margin: 10px auto;
+    }
+
 }

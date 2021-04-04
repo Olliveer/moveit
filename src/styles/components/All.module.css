@@ -109,3 +109,36 @@
     align-items: center;
     justify-content: center;
 }
+
+/* .ButtonsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+} */
+
+.ButtonsContainer :is(button) {
+    width: 70px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    transition: background 0.5s;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 16px;
+    color: var(--grey);
+}
+
+.ButtonsContainer button:first-of-type {
+    background: var(--green);
+    margin-right: 5px;
+}
+
+.ButtonsContainer button:last-of-type:hover {
+    background: var(--red);
+}
+
+.Container form :is(button):hover {
+    background: #4953B8;
+    border-radius: 5px;
+}

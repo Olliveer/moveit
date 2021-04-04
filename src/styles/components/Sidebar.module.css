@@ -54,8 +54,9 @@
     bottom: 32px;
 }
 
-/* position: absolute;
-width: 72px;
-height: 56px;
-left: 0px;
-top: 350px; */
+
+@media(max-width:768px) {
+    .container {
+        display: none;
+    }
+}

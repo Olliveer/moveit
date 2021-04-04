@@ -28,7 +28,7 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
                         <tr>
                             <th>posição</th>
                             <th>usuário</th>
-                            <th>desafios</th>
+                            <th className={styles.NoDisplay}>desafios</th>
                             <th>experiência</th>
                         </tr>
                     </thead>
@@ -44,7 +44,7 @@ export default function Leaderboards({ leaderboards }: InferGetStaticPropsType<t
                                     </div>
 
                                 </td>
-                                <td><span>{user.rank?.challengesCompleted ?? 0}</span> completados</td>
+                                <td className={styles.NoDisplay}><span>{user.rank?.challengesCompleted ?? 0}</span> completados</td>
                                 <td><span>{user.rank?.totalExperience ?? 0}</span> xp</td>
                             </tr>
                         ))}
