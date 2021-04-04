@@ -131,14 +131,20 @@
 
 .ButtonsContainer button:first-of-type {
     background: var(--green);
+    color: var(--white);
     margin-right: 5px;
+}
+.ButtonsContainer button:first-of-type:hover{
+    background: var(--red);
+    color: var(--white);
 }
 
 .ButtonsContainer button:last-of-type:hover {
     background: var(--red);
+    color: var(--white);
 }
 
-.Container form :is(button):hover {
-    background: #4953B8;
-    border-radius: 5px;
+.ButtonsContainer button:last-of-type {
+    background: var(--blue);
+    color: var(--white);
 }

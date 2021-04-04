@@ -82,7 +82,7 @@ export default function UsersList() {
                         <tr>
                             <th>Usuário</th>
                             <th>Email</th>
-                            <th>data</th>
+                            <th>AÇÕES</th>
                         </tr>
                     </thead>
                     <tbody>
