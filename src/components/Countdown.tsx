@@ -55,7 +55,7 @@ export function Countdown() {
                                     Abandonar ciclo <AiOutlineClose size={24} color='#666666' />
                                 </button>
 
-                                <ProgressBar now={progress} bsPrefix='prog' max={120} min={0} variant="success" srOnly />
+                                <ProgressBar now={progress} bsPrefix='prog' max={1500} min={0} variant="success" srOnly />
                             </>
                         ) : (
                             <button onClick={startCountdown} type="button" className={styles.countdownButton}>

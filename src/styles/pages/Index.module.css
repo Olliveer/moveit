@@ -83,7 +83,7 @@
 /* IF SESSION STYLES */
 
 .signedContainer {
-    height: 100%;
+    height: 100vh;
     border-radius: 5px;
     padding: 1.5rem 2rem;
     display: flex;

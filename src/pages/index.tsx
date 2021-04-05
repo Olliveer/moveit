@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
@@ -23,13 +24,17 @@ export default function Login(props) {
       setLoginError(String(router.query.error))
     }
   }, [router])
-  
-  if(loginError) {
-   return showToast({ type: 'error', message: loginError })
+
+  if (loginError) {
+    return showToast({ type: 'error', message: loginError })
   };
 
   return (
     <div className={styles.container}>
+      <NextSeo
+        title="Move.it | Faça login para começar"
+        description="Faça login para começar"
+      />
       <ToastAnimated />
       <section>
         <div>
