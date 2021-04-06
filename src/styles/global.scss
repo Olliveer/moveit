@@ -85,7 +85,7 @@ body.light-mode {
   }
   
   body.dark-mode {
-    background-color: #10171d;
+    background-color: #1b2938;
     color: #dfdfdf;
   
     .dark-mode-toggle > button {
@@ -101,7 +101,6 @@ body.light-mode {
   }
 
   body.dark-mode div > button{
-    background: #1b29388e;
     color: #ffffff93;
   }
 
@@ -115,14 +114,16 @@ body.light-mode {
   }
 
   body.dark-mode tr {
-    background:  #10171d !important;
-    border-bottom: 5px solid #1b2938;
+    background:  #1b2938 !important;
+    border-bottom: 5px solid var(--white);
   }
   body.dark-mode td:first-child{
-    border-right: 3px solid #1b2938 !important;
-    border-bottom: 5px solid #1b2938 !important;
+    border-right: 3px solid var(--white) !important;
+    border-bottom: 5px solid var(--white) !important;
   }
-  
+  body.dark-mode h1 {
+    color: var(--text);
+  }
 
   body.dark-mode svg{
     color: var(--white) !important;
@@ -133,20 +134,14 @@ body.light-mode {
   }
 
   body.dark-mode div {
-    background: #10171d;
-  }
-  
-  
-  
-  body.dark-mode .content code {
-    background-color: #1b2938;
+    background: #1b2938;
   }
   
  
   
   .dark-mode-toggle {
     display: flex;
-    margin: 0 50%;
+    margin: 0 10px;
     & > button {
       font-size: 1.2em;
       background: none;
@@ -176,6 +171,7 @@ body.light-mode {
     height: 10px;
     background: #555;
     position: relative;
+    margin-left: 5px;
     border-radius: 5px;
     -webkit-appearance: none;
     -moz-appearance: none;

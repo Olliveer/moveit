@@ -4,6 +4,7 @@ import {
   AiOutlineHome, AiOutlinePoweroff, AiOutlineSetting, AiOutlineTrophy, AiOutlineUser
 } from 'react-icons/ai';
 import styles from '../styles/components/Sidebar.module.css';
+import DarkModeToggle from './DarkModeToggle';
 
 
 export function Sidebar({ admin = null }) {
@@ -11,7 +12,7 @@ export function Sidebar({ admin = null }) {
     <aside className={styles.container}>
       <img src="/logo-side.svg" alt="Move it Logo" />
 
-      <div>
+      <div className={styles.ButtonsContainer}>
         {admin ? (
           <>
             <Link href="/beta">
@@ -55,9 +56,11 @@ export function Sidebar({ admin = null }) {
             </Link>
           </>
         )}
+        
       </div>
 
       <footer>        
+      <DarkModeToggle />
         <button onClick={() => signOut()}>
           <AiOutlinePoweroff size={32} />
         </button>

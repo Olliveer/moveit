@@ -10,8 +10,7 @@ export default function App({ Component, pageProps }) {
         clientMaxAge: 0,     // Re-fetch session if cache is older than 60 seconds
         keepAlive: 0 // Send keepAlive message every 5 minutes
       }}
-    >
-       <DarkModeToggle />
+    >       
       <Component {...pageProps} />
     </Provider>
   )
