@@ -1,6 +1,7 @@
 
 import { Provider } from 'next-auth/client';
-import '../styles/global.css';
+import DarkModeToggle from '../components/DarkModeToggle';
+import '../styles/global.scss';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -10,6 +11,7 @@ export default function App({ Component, pageProps }) {
         keepAlive: 0 // Send keepAlive message every 5 minutes
       }}
     >
+       <DarkModeToggle />
       <Component {...pageProps} />
     </Provider>
   )

@@ -1,6 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getSession } from 'next-auth/client';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
+import prisma from '../../lib/prismaDB';
 import { ChallangeBox } from '../components/ChallengeBox';
 import { CompleteChallanges } from '../components/CompleteChallanges';
 import { Countdown } from '../components/Countdown';
@@ -10,8 +11,6 @@ import { Sidebar } from '../components/Sidebar';
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 import styles from '../styles/pages/Home.module.css';
-import prisma from '../../lib/prismaDB';
-import { NextSeo } from 'next-seo';
 
 export default function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (

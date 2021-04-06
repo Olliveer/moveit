@@ -1,13 +1,12 @@
 import { signOut } from 'next-auth/client';
 import Link from 'next/link';
-import { useState } from 'react';
 import {
   AiOutlineHome, AiOutlinePoweroff, AiOutlineSetting, AiOutlineTrophy, AiOutlineUser
 } from 'react-icons/ai';
 import styles from '../styles/components/Sidebar.module.css';
 
 
-export function Sidebar({ admin = null }) {  
+export function Sidebar({ admin = null }) {
   return (
     <aside className={styles.container}>
       <img src="/logo-side.svg" alt="Move it Logo" />
@@ -58,7 +57,7 @@ export function Sidebar({ admin = null }) {
         )}
       </div>
 
-      <footer>
+      <footer>        
         <button onClick={() => signOut()}>
           <AiOutlinePoweroff size={32} />
         </button>
